@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roy's Bird Explorer</title>
+  <style>
+    * { box-sizing: border-box; font-family: Arial, sans-serif; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #dff7ff, #fff8dc);
+      color: #1f2937;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 3px 14px rgba(0,0,0,0.08);
+      padding: 12px 16px;
+    }
+
+    .topbar {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 30px;
+      color: #047857;
+    }
+
+    .subtitle {
+      margin-top: 4px;
+      font-size: 15px;
+      color: #475569;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    button, select, input {
+      border: 2px solid #cbd5e1;
+      border-radius: 14px;
+      padding: 10px 12px;
+      font-size: 15px;
+      background: white;
+      cursor: pointer;
+    }
+
+    button {
+      font-weight: bold;
+      color: #0f172a;
+    }
+
+    .primary {
+      background: #16a34a;
+      color: white;
+      border-color: #16a34a;
+    }
+
+    .language button.active {
+      background: #0ea5e9;
+      color: white;
+      border-color: #0ea5e9;
+    }
+
+    .layout {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 18px;
+      display: grid;
+      grid-template-columns: 310px 1fr;
+      gap: 18px;
+    }
+
+    .panel, .content {
+      background: #ffffffdd;
+      border-radius: 24px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.10);
+      padding: 18px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin: 14px 0 7px;
+      color: #334155;
+    }
+
+    select, input {
+      width: 100%;
+      outline: none;
+    }
+
+    .hint {
+      margin-top: 12px;
+      font-size: 14px;
+      color: #64748b;
+      line-height: 1.45;
+    }
+
+    .view-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .view-title h2 { margin: 0; color: #0f766e; }
+
+    .count {
+      background: #dbeafe;
+      color: #1d4ed8;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 16px;
+    }
+
+    .bird-card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.09);
+      border: 1px solid #e2e8f0;
+    }
+
+    .image-wrap {
+      position: relative;
+      height: 170px;
+      background: #e2e8f0;
+    }
+
+    .bird-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .sound-btn {
+      position: absolute;
+      bottom: 10px;
+      inset-inline-end: 10px;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      padding: 0;
+      background: #ffffffee;
+      border: 2px solid #0ea5e9;
+      font-size: 22px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+    }
+
+    .bird-card-content { padding: 14px; }
+
+    .bird-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .bird-name {
+      font-size: 21px;
+      font-weight: bold;
+      color: #111827;
+      margin-bottom: 4px;
+    }
+
+    .latin {
+      color: #64748b;
+      font-size: 13px;
+      margin-bottom: 8px;
+      direction: ltr;
+      text-align: start;
+    }
+
+    .plus-btn {
+      flex: 0 0 auto;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      padding: 0;
+      font-size: 26px;
+      line-height: 1;
+      background: #22c55e;
+      color: white;
+      border-color: #22c55e;
+    }
+
+    .seen-count {
+      margin-top: 8px;
+      color: #0f766e;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .rarity {
+      margin-top: 8px;
+      color: #a16207;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .tag {
+      background: #ecfeff;
+      color: #155e75;
+      padding: 5px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .menu-drawer {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      inset-inline-start: 0;
+      width: min(330px, 92vw);
+      background: white;
+      box-shadow: 8px 0 30px rgba(0,0,0,0.18);
+      z-index: 30;
+      padding: 18px;
+      transform: translateX(-110%);
+      transition: transform .25s ease;
+    }
+
+    html[dir="rtl"] .menu-drawer {
+      transform: translateX(110%);
+      box-shadow: -8px 0 30px rgba(0,0,0,0.18);
+    }
+
+    .menu-drawer.open { transform: translateX(0); }
+
+    .menu-drawer h2 { margin-top: 0; color: #047857; }
+
+    .menu-item {
+      display: block;
+      width: 100%;
+      margin: 8px 0;
+      text-align: start;
+      background: #f8fafc;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15,23,42,0.35);
+      z-index: 20;
+      display: none;
+    }
+
+    .overlay.open { display: block; }
+
+    .world-card {
+      background: linear-gradient(180deg, #eff6ff, #ffffff);
+      border: 2px solid #bfdbfe;
+      border-radius: 22px;
+      padding: 18px;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .world-emoji {
+      font-size: 76px;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .country-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 12px;
+    }
+
+    .country-buttons button.active {
+      background: #16a34a;
+      color: white;
+      border-color: #16a34a;
+    }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 850px) {
+      .topbar { align-items: flex-start; }
+      .layout { grid-template-columns: 1fr; padding: 12px; }
+      h1 { font-size: 24px; }
+      .top-actions { width: 100%; justify-content: flex-start; }
+      .panel, .content { padding: 14px; border-radius: 18px; }
+      .grid { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px; }
+      .image-wrap { height: 140px; }
+      .bird-name { font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="overlay" class="overlay" onclick="toggleMenu(false)"></div>
+
+  <nav id="menuDrawer" class="menu-drawer">
+    <h2 id="menuTitle">Menu</h2>
+    <button class="menu-item" onclick="setView('guide')" id="menuGuide">Bird Guide</button>
+    <button class="menu-item" onclick="setView('world')" id="menuWorld">World Map</button>
+    <button class="menu-item" onclick="setView('seen')" id="menuSeen">My Birds</button>
+    <button class="menu-item" onclick="setView('rare')" id="menuRare">Rare Birds</button>
+    <button class="menu-item" onclick="resetSeen()" id="menuReset">Reset Seen Birds</button>
+  </nav>
+
+  <header>
+    <div class="topbar">
+      <div>
+        <h1 id="title">Roy's Bird Explorer</h1>
+        <div class="subtitle" id="subtitle">Find birds by color, place, sound, and rarity</div>
+      </div>
+      <div class="top-actions">
+        <button class="primary" onclick="toggleMenu(true)" id="menuBtn">☰ Menu</button>
+        <div class="language">
+          <button id="enBtn" onclick="setLanguage('en')">English</button>
+          <button id="heBtn" onclick="setLanguage('he')">עברית</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel" id="filtersPanel">
+      <label id="countryLabel" for="countrySelect">Country</label>
+      <select id="countrySelect" onchange="filterBirds()"></select>
+
+      <label id="freeTextLabel" for="freeText">Describe the bird</label>
+      <input id="freeText" oninput="filterBirds()" placeholder="yellow wing, red beak, small" />
+
+      <label id="typeLabel" for="typeSelect">Bird type</label>
+      <select id="typeSelect" onchange="filterBirds()">
+        <option value="">All</option>
+      </select>
+
+      <label id="rarityLabel" for="raritySelect">Rarity</label>
+      <select id="raritySelect" onchange="filterBirds()">
+        <option value="">All</option>
+        <option value="1">⭐ Common</option>
+        <option value="2">⭐⭐ Fairly common</option>
+        <option value="3">⭐⭐⭐ Uncommon</option>
+        <option value="4">⭐⭐⭐⭐ Rare</option>
+        <option value="5">⭐⭐⭐⭐⭐ Very rare</option>
+      </select>
+
+      <div class="hint" id="hintText">Tip: try “red beak”, “water bird”, “raptor”, “yellow wing”, or choose a country.</div>
+    </section>
+
+    <section class="content">
+      <div id="worldView" class="hidden">
+        <div class="world-card">
+          <div class="world-emoji">🌍</div>
+          <h2 id="worldTitle">World Bird Map</h2>
+          <p id="worldText">Choose a country and discover common and rare birds there.</p>
+          <div id="countryButtons" class="country-buttons"></div>
+        </div>
+      </div>
+
+      <div class="view-title">
+        <h2 id="resultsTitle">Possible Birds</h2>
+        <div class="count" id="count">0 birds</div>
+      </div>
+      <div id="birdsGrid" class="grid"></div>
+    </section>
+  </main>
+
+  <script>
+    const fallbackBirdImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Bird_collage.jpg/640px-Bird_collage.jpg";
+
+    const translations = {
+      en: {
+        title: "Roy's Bird Explorer",
+        subtitle: "Find birds by color, place, sound, and rarity",
+        menu: "☰ Menu",
+        menuTitle: "Menu",
+        guide: "Bird Guide",
+        world: "World Map",
+        seen: "My Birds",
+        rare: "Rare Birds",
+        reset: "Reset Seen Birds",
+        country: "Country",
+        describe: "Describe the bird",
+        placeholder: "yellow wing, red beak, small",
+        type: "Bird type",
+        rarity: "Rarity",
+        all: "All",
+        hint: "Tip: try “red beak”, “water bird”, “raptor”, “yellow wing”, or choose a country.",
+        possible: "Possible Birds",
+        worldTitle: "World Bird Map",
+        worldText: "Choose a country and discover common and rare birds there.",
+        count: n => `${n} birds`,
+        seen: n => n > 0 ? `⭐ Seen ${n} times` : "Not seen yet 👀",
+        plusTitle: "I saw this bird",
+        rarityWord: "Rarity",
+        noResults: "No good match. Try fewer details or another country.",
+        soundMissing: "No sound yet for this bird",
+        confirmReset: "Reset all seen bird counts?",
+        types: {
+          songbird: "Songbird",
+          raptor: "Raptor",
+          water: "Water bird",
+          parrot: "Parrot",
+          owl: "Owl",
+          woodpecker: "Woodpecker",
+          shorebird: "Shorebird"
+        },
+        countries: {
+          Israel: "Israel",
+          USA: "USA",
+          Brazil: "Brazil",
+          Kenya: "Kenya",
+          UK: "United Kingdom",
+          India: "India",
+          Australia: "Australia",
+          Iceland: "Iceland"
+        }
+      },
+      he: {
+        title: "מדריך הציפורים של רועי",
+        subtitle: "מזהים ציפורים לפי צבע, מקום, קול ונדירות",
+        menu: "☰ תפריט",
+        menuTitle: "תפריט",
+        guide: "מדריך ציפורים",
+        world: "מפה עולמית",
+        seen: "הציפורים שראיתי",
+        rare: "ציפורים נדירות",
+        reset: "אפס ספירות",
+        country: "מדינה",
+        describe: "תאר את הציפור",
+        placeholder: "כנף צהובה, מקור אדום, קטנה",
+        type: "סוג ציפור",
+        rarity: "נדירות",
+        all: "הכול",
+        hint: "טיפ: נסה “מקור אדום”, “עוף מים”, “דורס”, “כנף צהובה”, או בחר מדינה.",
+        possible: "ציפורים אפשריות",
+        worldTitle: "מפת ציפורים עולמית",
+        worldText: "בחר מדינה וראה אילו ציפורים נפוצות או נדירות יש בה.",
+        count: n => `${n} ציפורים`,
+        seen: n => n > 0 ? `⭐ ראיתי ${n} פעמים` : "עוד לא ראיתי 👀",
+        plusTitle: "ראיתי את הציפור",
+        rarityWord: "נדירות",
+        noResults: "לא נמצאה התאמה טובה. נסה פחות פרטים או מדינה אחרת.",
+        soundMissing: "עדיין אין קול לציפור הזו",
+        confirmReset: "לאפס את כל ספירות הציפורים שראיתי?",
+        types: {
+          songbird: "ציפור שיר",
+          raptor: "עוף דורס",
+          water: "עוף מים",
+          parrot: "תוכי",
+          owl: "דורס לילה",
+          woodpecker: "נקר",
+          shorebird: "עוף חוף"
+        },
+        countries: {
+          Israel: "ישראל",
+          USA: "ארצות הברית",
+          Brazil: "ברזיל",
+          Kenya: "קניה",
+          UK: "בריטניה",
+          India: "הודו",
+          Australia: "אוסטרליה",
+          Iceland: "איסלנד"
+        }
+      }
+    };
+
+    const birds = [
+      {
+        id: "goldfinch",
+        name: { en: "European Goldfinch", he: "חוחית" },
+        latin: "Carduelis carduelis",
+        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Carduelis%20carduelis%20close%20up.jpg",
+        sound: "https://xeno-canto.org/sounds/uploaded/OOECIWCSWV/XC842237-European%20Goldfinch.mp3",
+        countries: ["Israel", "UK", "India"],
+        rarity: { Israel: 2, UK: 2, India: 4 },
+        type: "songbird",
+        tags: { en: ["small", "red face", "yellow wing", "black wing", "songbird"], he: ["קטנה", "אדום סביב המקור", "כנף צהובה", "כנף שחורה", "ציפור שיר"] }
+      },
+      {
+        id: "hoopoe",
+        name: { en: "Eurasian Hoopoe", he: "דוכיפת" },
+        latin: "Upupa epops",
+        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Upupa_epops_-_Eurasian_Hoopoe.jpg",
+        sound: "https://xeno-canto.org/sounds/uploaded/OOECIWCSWV/XC843424-Eurasian%20Hoopoe.mp3",
+        countries: ["Israel", "India", "Kenya"],
+        rarity: { Israel: 1, India: 2, Kenya: 3 },
+        type: "songbird",
+        tags: { en: ["crest", "orange", "black", "white", "long beak"], he: ["ציצית", "כתום", "שחור", "לבן", "מקור ארוך"] }
+      },
+      {
+        id: "white-throated-kingfisher",
+        name: { en: "White-throated Kingfisher", he: "שלדג לבן־חזה" },
+        latin: "Halcyon smyrnensis",
+        image: "https://commons.wikimedia.org/wiki/Special:FilePath/White-throated%20Kingfisher%20RWD.jpg",
+        sound: "https://xeno-canto.org/sounds/uploaded/OOECIWCSWV/XC842557-White-throated%20Kingfisher.mp3",
+        countries: ["Israel", "India"],
+        rarity: { Israel: 2, India: 1 },
+        type: "water",
+        tags: { en: ["blue wing", "red beak", "white chest", "brown head", "water bird"], he: ["כנף כחולה", "מקור אדום", "חזה לבן", "ראש חום", "עוף מים"] }
+      },
+      {
+        id: "rose-ringed-parakeet",
+        name: { en: "Rose-ringed Parakeet", he: "דררה" },
+        latin: "Psittacula krameri",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Rose-ringed_Parakeet_Psittacula_krameri.jpg/640px-Rose-ringed_Parakeet_Psittacula_krameri.jpg",
+        sound: "https://xeno-canto.org/sounds/uploaded/OOECIWCSWV/XC843396-Rose-ringed%20Parakeet.mp3",
+        countries: ["Israel", "India", "UK"],
+        rarity: { Israel: 1, India: 1, UK: 3 },
+        type: "parrot",
+        tags: { en: ["green", "red beak", "long tail", "parrot"], he: ["ירוק", "מקור אדום", "זנב ארוך", "תוכי"] }
+      },
+      {
+        id: "common-kestrel",
+        name: { en: "Common Kestrel", he: "בז מצוי" },
+        latin: "Falco tinnunculus",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Common_Kestrel_Falco_tinnunculus.jpg/640px-Common_Kestrel_Falco_tinnunculus.jpg",
+        sound: "https://xeno-canto.org/sounds/uploaded/OOECIWCSWV/XC842383-Common%20Kestrel.mp3",
+        countries: ["Israel", "UK", "Kenya", "India"],
+        rarity: { Israel: 2, UK: 2, Kenya: 2, India: 3 },
+        type: "raptor",
+        tags: { en: ["raptor", "falcon", "brown", "spotted", "sharp wings"], he: ["דורס", "בז", "חום", "מנוקד", "כנפיים חדות"] }
+      },
+      {
+        id: "griffon-vulture",
+        name: { en: "Griffon Vulture", he: "נשר מקראי" },
+        latin: "Gyps fulvus",
+        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Gyps_fulvus_-_01.jpg",
+        sound: "",
+        countries: ["Israel", "India"],
+        rarity: { Israel: 4, India: 5 },
+        type: "raptor",
+        tags: { en: ["vulture", "large", "brown", "pale neck", "raptor"], he: ["נשר", "גדול", "חום", "צוואר בהיר", "דורס"] }
+      },
+      {
+        id: "barn-owl",
+        name: { en: "Barn Owl", he: "תנשמת לבנה" },
+        latin: "Tyto alba",
+        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Tyto_alba_-British_Wildlife_Centre-8a.jpg",
+        sound: "https://xeno-canto.org/sounds/uploaded/OOECIWCSWV/XC842311-Western%20Barn%20Owl.mp3",
+        countries: ["Israel", "UK", "USA", "Australia", "India"],
+        rarity: { Israel: 2, UK: 2, USA: 2, Australia: 2, India: 2 },
+        type: "owl",
+        tags: { en: ["owl", "white face", "night", "pale", "raptor"], he: ["ינשוף", "פנים לבנות", "לילה", "בהירה", "דורס לילה"] }
+      },
+      {
+        id: "syrian-woodpecker",
+        name: { en: "Syrian Woodpecker", he: "נקר סורי" },
+        latin: "Dendrocopos syriacus",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Syrian_Woodpecker.jpg/640px-Syrian_Woodpecker.jpg",
+        sound: "",
+        countries: ["Israel"],
+        rarity: { Israel: 2 },
+        type: "woodpecker",
+        tags: { en: ["woodpecker", "black", "white", "red head", "tree"], he: ["נקר", "שחור", "לבן", "אדום בראש", "עץ"] }
+      },
+      {
+        id: "little-egret",
+        name: { en: "Little Egret", he: "לבנית קטנה" },
+        latin: "Egretta garzetta",
+        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Little_Egret_%28Egretta_garzetta%29.jpg",
+        sound: "",
+        countries: ["Israel", "UK", "India", "Kenya", "Australia"],
+        rarity: { Israel: 1, UK: 3, India: 1, Kenya: 2, Australia: 2 },
+        type: "water",
+        tags: { en: ["white", "water bird", "black beak", "long neck", "egret"], he: ["לבן", "עוף מים", "מקור שחור", "צוואר ארוך", "לבנית"] }
+      },
+      {
+        id: "grey-heron",
+        name: { en: "Grey Heron", he: "אנפה אפורה" },
+        latin: "Ardea cinerea",
+        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Ardea_cinerea_1.jpg",
+        sound: "",
+        countries: ["Israel", "UK", "India", "Kenya"],
+        rarity: { Israel: 2, UK: 1, India: 2, Kenya: 2 },
+        type: "water",
+        tags: { en: ["grey", "water bird", "long neck", "long beak", "heron"], he: ["אפור", "עוף מים", "צוואר ארוך", "מקור ארוך", "אנפה"] }
+      },
+      {
+        id: "greater-flamingo",
+        name: { en: "Greater Flamingo", he: "פלמינגו מצוי" },
+        latin: "Phoenicopterus roseus",
+        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Greater_Flamingo_%28Phoenicopterus_ruber_roseus%29.jpg",
+        sound: "",
+        countries: ["Israel", "India", "Kenya"],
+        rarity: { Israel: 3, India: 2, Kenya: 2 },
+        type: "water",
+        tags: { en: ["pink", "water bird", "long legs", "curved beak"], he: ["ורוד", "עוף מים", "רגליים ארוכות", "מקור מעוקל"] }
+      },
+      {
+        id: "northern-lapwing",
+        name: { en: "Northern Lapwing", he: "סיקסק" },
+        latin: "Vanellus vanellus",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Northern_Lapwing.jpg/640px-Northern_Lapwing.jpg",
+        sound: "",
+        countries: ["Israel", "UK"],
+        rarity: { Israel: 3, UK: 2 },
+        type: "shorebird",
+        tags: { en: ["crest", "black", "white", "green", "shorebird"], he: ["ציצית", "שחור", "לבן", "ירוק", "עוף חוף"] }
+      },
+      {
+        id: "house-sparrow",
+        name: { en: "House Sparrow", he: "דרור הבית" },
+        latin: "Passer domesticus",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/House_sparrow04.jpg/640px-House_sparrow04.jpg",
+        sound: "https://xeno-canto.org/sounds/uploaded/OOECIWCSWV/XC842284-House%20Sparrow.mp3",
+        countries: ["Israel", "USA", "UK", "India", "Australia", "Brazil"],
+        rarity: { Israel: 1, USA: 1, UK: 1, India: 1, Australia: 2, Brazil: 2 },
+        type: "songbird",
+        tags: { en: ["small", "brown", "grey", "city", "short beak"], he: ["קטנה", "חום", "אפור", "עירוני", "מקור קצר"] }
+      },
+      {
+        id: "bald-eagle",
+        name: { en: "Bald Eagle", he: "עיטם לבן־ראש" },
+        latin: "Haliaeetus leucocephalus",
+        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Bald_Eagle_Portrait.jpg",
+        sound: "",
+        countries: ["USA"],
+        rarity: { USA: 2 },
+        type: "raptor",
+        tags: { en: ["eagle", "white head", "brown body", "raptor", "large"], he: ["עיט", "ראש לבן", "גוף חום", "דורס", "גדול"] }
+      },
+      {
+        id: "toucan",
+        name: { en: "Toco Toucan", he: "טוקן טוקו" },
+        latin: "Ramphastos toco",
+        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Toco_Toucan_RWD.jpg",
+        sound: "",
+        countries: ["Brazil"],
+        rarity: { Brazil: 2 },
+        type: "songbird",
+        tags: { en: ["huge beak", "orange beak", "black", "white", "tropical"], he: ["מקור ענק", "מקור כתום", "שחור", "לבן", "טרופי"] }
+      },
+      {
+        id: "scarlet-macaw",
+        name: { en: "Scarlet Macaw", he: "ארה אדומה" },
+        latin: "Ara macao",
+        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Ara_macao_-on_a_small_bicycle-8a.jpg",
+        sound: "",
+        countries: ["Brazil"],
+        rarity: { Brazil: 3 },
+        type: "parrot",
+        tags: { en: ["parrot", "red", "blue wing", "yellow wing", "large"], he: ["תוכי", "אדום", "כנף כחולה", "כנף צהובה", "גדול"] }
+      },
+      {
+        id: "lilac-breasted-roller",
+        name: { en: "Lilac-breasted Roller", he: "כחל לילכי" },
+        latin: "Coracias caudatus",
+        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Lilac-breasted_roller.jpg",
+        sound: "",
+        countries: ["Kenya"],
+        rarity: { Kenya: 1 },
+        type: "songbird",
+        tags: { en: ["colorful", "blue", "lilac", "green", "roller"], he: ["צבעונית", "כחול", "לילך", "ירוק", "כחל"] }
+      },
+      {
+        id: "puffin",
+        name: { en: "Atlantic Puffin", he: "תוכי־ים אטלנטי" },
+        latin: "Fratercula arctica",
+        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Atlantic_Puffin_Fratercula_arctica.jpg",
+        sound: "",
+        countries: ["Iceland", "UK"],
+        rarity: { Iceland: 2, UK: 4 },
+        type: "water",
+        tags: { en: ["puffin", "orange beak", "black", "white", "sea bird"], he: ["תוכי ים", "מקור כתום", "שחור", "לבן", "עוף ים"] }
+      },
+      {
+        id: "kookaburra",
+        name: { en: "Laughing Kookaburra", he: "קוקברה צוחקת" },
+        latin: "Dacelo novaeguineae",
+        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Laughing_Kookaburra.jpg",
+        sound: "",
+        countries: ["Australia"],
+        rarity: { Australia: 1 },
+        type: "songbird",
+        tags: { en: ["large head", "brown", "white", "laughing call", "kingfisher"], he: ["ראש גדול", "חום", "לבן", "קול צחוק", "שלדג"] }
+      }
+    ];
+
+    const countryList = ["Israel", "USA", "Brazil", "Kenya", "UK", "India", "Australia", "Iceland"];
+    const typeList = ["songbird", "raptor", "water", "parrot", "owl", "woodpecker", "shorebird"];
+
+    let lang = localStorage.getItem("birdLang") || ((navigator.language || "").startsWith("he") ? "he" : "en");
+    let currentView = "guide";
+    let seenCounts = JSON.parse(localStorage.getItem("birdSeenCountsWorld") || "{}");
+    let currentAudio = null;
+
+    const grid = document.getElementById("birdsGrid");
+    const countEl = document.getElementById("count");
+    const countrySelect = document.getElementById("countrySelect");
+    const typeSelect = document.getElementById("typeSelect");
+    const raritySelect = document.getElementById("raritySelect");
+    const freeText = document.getElementById("freeText");
+
+    function tr() { return translations[lang]; }
+    function birdName(bird) { return bird.name[lang] || bird.name.en; }
+    function birdTags(bird) { return bird.tags[lang] || bird.tags.en; }
+    function rarityStars(n) { return "⭐".repeat(n || 1); }
+    function getBirdRarity(bird, country) { return bird.rarity[country] || Math.min(...Object.values(bird.rarity)); }
+
+    function normalize(text) {
+      return String(text || "").trim().toLowerCase();
+    }
+
+    function setLanguage(newLang) {
+      lang = newLang;
+      localStorage.setItem("birdLang", lang);
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === "he" ? "rtl" : "ltr";
+      applyLanguage();
+      filterBirds();
+    }
+
+    function applyLanguage() {
+      const t = tr();
+      document.title = t.title;
+      document.getElementById("title").textContent = t.title;
+      document.getElementById("subtitle").textContent = t.subtitle;
+      document.getElementById("menuBtn").textContent = t.menu;
+      document.getElementById("menuTitle").textContent = t.menuTitle;
+      document.getElementById("menuGuide").textContent = t.guide;
+      document.getElementById("menuWorld").textContent = t.world;
+      document.getElementById("menuSeen").textContent = t.seen;
+      document.getElementById("menuRare").textContent = t.rare;
+      document.getElementById("menuReset").textContent = t.reset;
+      document.getElementById("countryLabel").textContent = t.country;
+      document.getElementById("freeTextLabel").textContent = t.describe;
+      document.getElementById("typeLabel").textContent = t.type;
+      document.getElementById("rarityLabel").textContent = t.rarity;
+      document.getElementById("hintText").textContent = t.hint;
+      document.getElementById("resultsTitle").textContent = currentView === "world" ? t.worldTitle : t.possible;
+      document.getElementById("worldTitle").textContent = t.worldTitle;
+      document.getElementById("worldText").textContent = t.worldText;
+      freeText.placeholder = t.placeholder;
+      document.getElementById("enBtn").classList.toggle("active", lang === "en");
+      document.getElementById("heBtn").classList.toggle("active", lang === "he");
+      buildCountrySelect();
+      buildTypeSelect();
+      buildCountryButtons();
+    }
+
+    function buildCountrySelect() {
+      const selected = countrySelect.value || "Israel";
+      countrySelect.innerHTML = `<option value="">${tr().all}</option>`;
+      countryList.forEach(country => {
+        const option = document.createElement("option");
+        option.value = country;
+        option.textContent = tr().countries[country] || country;
+        countrySelect.appendChild(option);
+      });
+      countrySelect.value = selected;
+    }
+
+    function buildTypeSelect() {
+      const selected = typeSelect.value;
+      typeSelect.innerHTML = `<option value="">${tr().all}</option>`;
+      typeList.forEach(type => {
+        const option = document.createElement("option");
+        option.value = type;
+        option.textContent = tr().types[type] || type;
+        typeSelect.appendChild(option);
+      });
+      typeSelect.value = selected;
+    }
+
+    function buildCountryButtons() {
+      const wrap = document.getElementById("countryButtons");
+      wrap.innerHTML = "";
+      countryList.forEach(country => {
+        const btn = document.createElement("button");
+        btn.textContent = tr().countries[country] || country;
+        btn.className = countrySelect.value === country ? "active" : "";
+        btn.onclick = () => {
+          countrySelect.value = country;
+          filterBirds();
+        };
+        wrap.appendChild(btn);
+      });
+    }
+
+    function toggleMenu(open) {
+      document.getElementById("menuDrawer").classList.toggle("open", open);
+      document.getElementById("overlay").classList.toggle("open", open);
+    }
+
+    function setView(view) {
+      currentView = view;
+      toggleMenu(false);
+      document.getElementById("worldView").classList.toggle("hidden", view !== "world");
+      document.getElementById("resultsTitle").textContent = view === "world" ? tr().worldTitle : tr().possible;
+      filterBirds();
+    }
+
+    function scoreBird(bird, terms) {
+      const text = normalize([
+        birdName(bird), bird.name.en, bird.name.he, bird.latin, bird.type,
+        tr().types[bird.type], ...bird.tags.en, ...bird.tags.he
+      ].join(" "));
+      let score = 0;
+      terms.forEach(term => {
+        if (text.includes(term)) score += 1;
+      });
+      return score;
+    }
+
+    function filterBirds() {
+      const country = countrySelect.value;
+      const type = typeSelect.value;
+      const rarity = raritySelect.value;
+      const terms = normalize(freeText.value).split(/\s+/).filter(Boolean);
+
+      let list = birds.map(bird => {
+        const chosenCountry = country || bird.countries[0];
+        return { bird, score: scoreBird(bird, terms), rarityValue: getBirdRarity(bird, chosenCountry) };
+      });
+
+      if (country) list = list.filter(item => item.bird.countries.includes(country));
+      if (type) list = list.filter(item => item.bird.type === type);
+      if (rarity) list = list.filter(item => item.rarityValue >= Number(rarity));
+      if (terms.length) list = list.filter(item => item.score > 0);
+      if (currentView === "seen") list = list.filter(item => (seenCounts[item.bird.id] || 0) > 0);
+      if (currentView === "rare") list = list.filter(item => item.rarityValue >= 4);
+
+      list.sort((a, b) => {
+        const seenDiff = (seenCounts[b.bird.id] || 0) - (seenCounts[a.bird.id] || 0);
+        if (seenDiff) return seenDiff;
+        if (terms.length && b.score !== a.score) return b.score - a.score;
+        return b.rarityValue - a.rarityValue;
+      });
+
+      renderBirds(list, country);
+      buildCountryButtons();
+    }
+
+    function renderBirds(list, country) {
+      grid.innerHTML = "";
+      countEl.textContent = tr().count(list.length);
+
+      if (!list.length) {
+        grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; color:#64748b; font-size:20px; padding:38px 10px;">${tr().noResults}</div>`;
+        return;
+      }
+
+      list.forEach(({ bird, rarityValue }) => {
+        const card = document.createElement("article");
+        card.className = "bird-card";
+        const tags = birdTags(bird).slice(0, 7);
+        const countryNames = bird.countries.map(c => tr().countries[c] || c).join(", ");
+        card.innerHTML = `
+          <div class="image-wrap">
+            <img src="${bird.image}" alt="${birdName(bird)}" loading="lazy" onerror="this.onerror=null; this.src=fallbackBirdImage;">
+            <button class="sound-btn" title="Sound" onclick="playSound('${bird.id}')">🔊</button>
+          </div>
+          <div class="bird-card-content">
+            <div class="bird-title-row">
+              <div>
+                <div class="bird-name">${birdName(bird)}</div>
+                <div class="latin">${bird.latin}</div>
+              </div>
+              <button class="plus-btn" title="${tr().plusTitle}" onclick="addSeen('${bird.id}')">+</button>
+            </div>
+            <div class="seen-count" id="seen-${bird.id}">${tr().seen(seenCounts[bird.id] || 0)}</div>
+            <div class="rarity">${tr().rarityWord}: ${rarityStars(rarityValue)}</div>
+            <div class="tags">
+              <span class="tag">${tr().types[bird.type] || bird.type}</span>
+              <span class="tag">${countryNames}</span>
+              ${tags.map(tag => `<span class="tag">${tag}</span>`).join("")}
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function addSeen(id) {
+      seenCounts[id] = (seenCounts[id] || 0) + 1;
+      localStorage.setItem("birdSeenCountsWorld", JSON.stringify(seenCounts));
+      filterBirds();
+    }
+
+    function resetSeen() {
+      if (!confirm(tr().confirmReset)) return;
+      seenCounts = {};
+      localStorage.setItem("birdSeenCountsWorld", JSON.stringify(seenCounts));
+      filterBirds();
+      toggleMenu(false);
+    }
+
+    function playSound(id) {
+      const bird = birds.find(b => b.id === id);
+      if (!bird || !bird.sound) {
+        alert(tr().soundMissing);
+        return;
+      }
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+      }
+      currentAudio = new Audio(bird.sound);
+      currentAudio.play().catch(() => alert(tr().soundMissing));
+    }
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") toggleMenu(false);
+    });
+
+    setLanguage(lang);
+    countrySelect.value = "Israel";
+    filterBirds();
+  </script>
+</body>
+</html>
