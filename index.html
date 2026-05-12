@@ -5,7 +5,54 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Roy's Bird Explorer</title>
   <style>
-    *{box-sizing:border-box;font-family:Arial,sans-serif} body{margin:0;min-height:100vh;background:linear-gradient(135deg,#dff7ff,#fff8dc);color:#1f2937} header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);box-shadow:0 3px 14px rgba(0,0,0,.08);padding:12px 16px}.topbar{max-width:1220px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px}h1{margin:0;font-size:30px;color:#047857}.subtitle{margin-top:4px;font-size:15px;color:#475569}.top-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}button,select,input{border:2px solid #cbd5e1;border-radius:14px;padding:10px 12px;font-size:15px;background:white;cursor:pointer}button{font-weight:bold;color:#0f172a}.primary{background:#16a34a;color:white;border-color:#16a34a}.language button.active{background:#0ea5e9;color:white;border-color:#0ea5e9}.layout{max-width:1220px;margin:auto;padding:18px;display:grid;grid-template-columns:320px 1fr;gap:18px}.panel,.content{background:#ffffffdd;border-radius:24px;box-shadow:0 12px 32px rgba(0,0,0,.10);padding:18px}label{display:block;font-weight:bold;margin:14px 0 7px;color:#334155}select,input{width:100%;outline:none}.hint{margin-top:12px;font-size:14px;color:#64748b;line-height:1.45}.view-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px}.view-title h2{margin:0;color:#0f766e}.count{background:#dbeafe;color:#1d4ed8;padding:8px 12px;border-radius:999px;font-weight:bold;white-space:nowrap}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}.bird-card{background:white;border-radius:20px;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.09);border:1px solid #e2e8f0}.image-wrap{position:relative;height:170px;background:#e2e8f0}.bird-card img{width:100%;height:100%;object-fit:cover;display:block}.sound-btn{position:absolute;bottom:10px;inset-inline-end:10px;width:46px;height:46px;border-radius:50%;padding:0;background:#ffffffee;border:2px solid #0ea5e9;font-size:22px;box-shadow:0 4px 12px rgba(0,0,0,.18)}.bird-card-content{padding:14px}.bird-title-row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.bird-name{font-size:21px;font-weight:bold;color:#111827;margin-bottom:4px}.latin{color:#64748b;font-size:13px;margin-bottom:8px;direction:ltr;text-align:start}.plus-btn{flex:0 0 auto;width:42px;height:42px;border-radius:50%;padding:0;font-size:26px;line-height:1;background:#22c55e;color:white;border-color:#22c55e}.seen-count{margin-top:8px;color:#0f766e;font-weight:bold;font-size:14px}.rarity{margin-top:8px;color:#a16207;font-weight:bold;font-size:14px}.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.tag{background:#ecfeff;color:#155e75;padding:5px 8px;border-radius:999px;font-size:12px;font-weight:bold}.menu-drawer{position:fixed;top:0;bottom:0;inset-inline-start:0;width:min(330px,92vw);background:white;box-shadow:8px 0 30px rgba(0,0,0,.18);z-index:30;padding:18px;transform:translateX(-110%);transition:transform .25s ease}html[dir=rtl] .menu-drawer{transform:translateX(110%);box-shadow:-8px 0 30px rgba(0,0,0,.18)}.menu-drawer.open{transform:translateX(0)}.menu-drawer h2{margin-top:0;color:#047857}.menu-item{display:block;width:100%;margin:8px 0;text-align:start;background:#f8fafc}.overlay{position:fixed;inset:0;background:rgba(15,23,42,.35);z-index:20;display:none}.overlay.open{display:block}.world-card{background:linear-gradient(180deg,#eff6ff,#fff);border:2px solid #bfdbfe;border-radius:22px;padding:18px;text-align:center;margin-bottom:16px}.world-emoji{font-size:76px;line-height:1;margin-bottom:8px}.country-buttons{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:12px}.country-buttons button.active{background:#16a34a;color:white;border-color:#16a34a}.small-note{font-size:13px;color:#64748b;line-height:1.4;margin-top:8px}.hidden{display:none!important}@media(max-width:850px){.topbar{align-items:flex-start;flex-direction:column}.layout{grid-template-columns:1fr;padding:12px}h1{font-size:24px}.top-actions{width:100%;justify-content:flex-start}.panel,.content{padding:14px;border-radius:18px}.grid{grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}.image-wrap{height:140px}.bird-name{font-size:18px}}
+    * { box-sizing: border-box; font-family: Arial, sans-serif; }
+    body { margin:0; min-height:100vh; background:linear-gradient(135deg,#dff7ff,#fff8dc); color:#1f2937; }
+    header { position:sticky; top:0; z-index:10; background:rgba(255,255,255,.94); backdrop-filter:blur(8px); box-shadow:0 3px 14px rgba(0,0,0,.08); padding:12px 16px; }
+    .topbar { max-width:1240px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    h1 { margin:0; font-size:30px; color:#047857; }
+    .subtitle { margin-top:4px; font-size:15px; color:#475569; }
+    .top-actions { display:flex; gap:8px; align-items:center; flex-wrap:wrap; justify-content:flex-end; }
+    button, select, input { border:2px solid #cbd5e1; border-radius:14px; padding:10px 12px; font-size:15px; background:white; cursor:pointer; }
+    button { font-weight:bold; color:#0f172a; }
+    .primary { background:#16a34a; color:white; border-color:#16a34a; }
+    .language button.active { background:#0ea5e9; color:white; border-color:#0ea5e9; }
+    .layout { max-width:1240px; margin:0 auto; padding:18px; display:grid; grid-template-columns:320px 1fr; gap:18px; }
+    .panel, .content { background:#ffffffdd; border-radius:24px; box-shadow:0 12px 32px rgba(0,0,0,.10); padding:18px; }
+    label { display:block; font-weight:bold; margin:14px 0 7px; color:#334155; }
+    select, input { width:100%; outline:none; }
+    .hint { margin-top:12px; font-size:14px; color:#64748b; line-height:1.45; }
+    .view-title { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:16px; }
+    .view-title h2 { margin:0; color:#0f766e; }
+    .count { background:#dbeafe; color:#1d4ed8; padding:8px 12px; border-radius:999px; font-weight:bold; white-space:nowrap; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:16px; }
+    .bird-card { background:white; border-radius:20px; overflow:hidden; box-shadow:0 8px 20px rgba(0,0,0,.09); border:1px solid #e2e8f0; }
+    .image-wrap { position:relative; height:170px; background:#e2e8f0; }
+    .bird-card img { width:100%; height:100%; object-fit:cover; display:block; }
+    .sound-btn { position:absolute; bottom:10px; inset-inline-end:10px; width:46px; height:46px; border-radius:50%; padding:0; background:#ffffffee; border:2px solid #0ea5e9; font-size:22px; box-shadow:0 4px 12px rgba(0,0,0,.18); }
+    .sound-btn.loading { background:#fef3c7; border-color:#f59e0b; }
+    .bird-card-content { padding:14px; }
+    .bird-title-row { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
+    .bird-name { font-size:21px; font-weight:bold; color:#111827; margin-bottom:4px; }
+    .latin { color:#64748b; font-size:13px; margin-bottom:8px; direction:ltr; text-align:start; font-style:italic; }
+    .plus-btn { flex:0 0 auto; width:42px; height:42px; border-radius:50%; padding:0; font-size:26px; line-height:1; background:#22c55e; color:white; border-color:#22c55e; }
+    .seen-count { margin-top:8px; color:#0f766e; font-weight:bold; font-size:14px; }
+    .rarity { margin-top:8px; color:#a16207; font-weight:bold; font-size:14px; }
+    .tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
+    .tag { background:#ecfeff; color:#155e75; padding:5px 8px; border-radius:999px; font-size:12px; font-weight:bold; }
+    .menu-drawer { position:fixed; top:0; bottom:0; inset-inline-start:0; width:min(330px,92vw); background:white; box-shadow:8px 0 30px rgba(0,0,0,.18); z-index:30; padding:18px; transform:translateX(-110%); transition:transform .25s ease; }
+    html[dir="rtl"] .menu-drawer { transform:translateX(110%); box-shadow:-8px 0 30px rgba(0,0,0,.18); }
+    .menu-drawer.open { transform:translateX(0); }
+    .menu-drawer h2 { margin-top:0; color:#047857; }
+    .menu-item { display:block; width:100%; margin:8px 0; text-align:start; background:#f8fafc; }
+    .overlay { position:fixed; inset:0; background:rgba(15,23,42,.35); z-index:20; display:none; }
+    .overlay.open { display:block; }
+    .world-card { background:linear-gradient(180deg,#eff6ff,#fff); border:2px solid #bfdbfe; border-radius:22px; padding:18px; text-align:center; margin-bottom:16px; }
+    .world-emoji { font-size:76px; line-height:1; margin-bottom:8px; }
+    .country-buttons { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-top:12px; }
+    .country-buttons button.active { background:#16a34a; color:white; border-color:#16a34a; }
+    .small-note { font-size:13px; color:#64748b; line-height:1.4; margin-top:10px; }
+    .hidden { display:none!important; }
+    @media(max-width:850px){ .topbar{align-items:flex-start;flex-direction:column}.layout{grid-template-columns:1fr;padding:12px}h1{font-size:24px}.top-actions{width:100%;justify-content:flex-start}.panel,.content{padding:14px;border-radius:18px}.grid{grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}.image-wrap{height:140px}.bird-name{font-size:18px} }
   </style>
 </head>
 <body>
@@ -18,68 +65,494 @@
     <button class="menu-item" onclick="setView('rare')" id="menuRare">Rare Birds</button>
     <button class="menu-item" onclick="resetSeen()" id="menuReset">Reset Seen Birds</button>
   </nav>
+
   <header>
     <div class="topbar">
-      <div><h1 id="title">Roy's Bird Explorer</h1><div class="subtitle" id="subtitle">Find birds by color, place, sound, and rarity</div></div>
-      <div class="top-actions"><button class="primary" onclick="toggleMenu(true)" id="menuBtn">☰ Menu</button><div class="language"><button id="enBtn" onclick="setLanguage('en')">English</button><button id="heBtn" onclick="setLanguage('he')">עברית</button></div></div>
+      <div>
+        <h1 id="title">Roy's Bird Explorer</h1>
+        <div class="subtitle" id="subtitle">100 birds, sounds, countries, and rarity</div>
+      </div>
+      <div class="top-actions">
+        <button class="primary" onclick="toggleMenu(true)" id="menuBtn">☰ Menu</button>
+        <div class="language">
+          <button id="enBtn" onclick="setLanguage('en')">English</button>
+          <button id="heBtn" onclick="setLanguage('he')">עברית</button>
+        </div>
+      </div>
     </div>
   </header>
+
   <main class="layout">
     <section class="panel">
-      <label id="countryLabel" for="countrySelect">Country</label><select id="countrySelect" onchange="filterBirds()"></select>
-      <label id="freeTextLabel" for="freeText">Describe the bird</label><input id="freeText" oninput="filterBirds()" placeholder="yellow wing, red beak, small" />
-      <label id="typeLabel" for="typeSelect">Bird type</label><select id="typeSelect" onchange="filterBirds()"></select>
-      <label id="rarityLabel" for="raritySelect">Rarity</label><select id="raritySelect" onchange="filterBirds()"><option value="">All</option><option value="1">⭐ Common</option><option value="2">⭐⭐ Fairly common</option><option value="3">⭐⭐⭐ Uncommon</option><option value="4">⭐⭐⭐⭐ Rare</option><option value="5">⭐⭐⭐⭐⭐ Very rare</option></select>
-      <div class="hint" id="hintText"></div><div class="small-note" id="mediaNote"></div>
+      <label id="countryLabel" for="countrySelect">Country</label>
+      <select id="countrySelect" onchange="filterBirds()"></select>
+
+      <label id="freeTextLabel" for="freeText">Describe the bird</label>
+      <input id="freeText" oninput="filterBirds()" placeholder="yellow wing, red beak, small" />
+
+      <label id="typeLabel" for="typeSelect">Bird type</label>
+      <select id="typeSelect" onchange="filterBirds()"></select>
+
+      <label id="rarityLabel" for="raritySelect">Rarity</label>
+      <select id="raritySelect" onchange="filterBirds()"></select>
+
+      <div class="hint" id="hintText"></div>
+      <div class="small-note" id="mediaNote"></div>
     </section>
+
     <section class="content">
-      <div id="worldView" class="hidden"><div class="world-card"><div class="world-emoji">🌍</div><h2 id="worldTitle">World Bird Map</h2><p id="worldText">Choose a country and discover common and rare birds there.</p><div id="countryButtons" class="country-buttons"></div></div></div>
-      <div class="view-title"><h2 id="resultsTitle">Possible Birds</h2><div class="count" id="count">0 birds</div></div>
+      <div id="worldView" class="hidden">
+        <div class="world-card">
+          <div class="world-emoji">🌍</div>
+          <h2 id="worldTitle">World Bird Map</h2>
+          <p id="worldText">Choose a country and discover common and rare birds there.</p>
+          <div id="countryButtons" class="country-buttons"></div>
+        </div>
+      </div>
+
+      <div class="view-title">
+        <h2 id="resultsTitle">Birds</h2>
+        <div class="count" id="count">0 birds</div>
+      </div>
       <div id="birdsGrid" class="grid"></div>
     </section>
   </main>
+
   <script>
     const FALLBACK_IMAGE = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Bird_collage.jpg/640px-Bird_collage.jpg";
+
     const translations = {
-      en:{title:"Roy's Bird Explorer",subtitle:"Find birds by country, sound, and rarity",menu:"☰ Menu",menuTitle:"Menu",guide:"Bird Guide",world:"World Map",seen:"My Birds",rare:"Rare Birds",reset:"Reset Seen Birds",country:"Country",describe:"Describe the bird",placeholder:"yellow wing, red beak, small",type:"Bird type",rarity:"Rarity",all:"All",hint:"Tip: try “red beak”, “water bird”, “raptor”, “yellow wing”, or choose a country.",mediaNote:"Images are fetched automatically from Wikipedia/Wikimedia. Sounds are searched from xeno-canto when you press 🔊.",possible:"Possible Birds",worldTitle:"World Bird Map",worldText:"Choose a country and discover common and rare birds there.",count:n=>`${n} birds`,seenCount:n=>n>0?`⭐ Seen ${n} times`:"Not seen yet 👀",plusTitle:"I saw this bird",rarityWord:"Rarity",noResults:"No good match. Try fewer details or another country.",soundMissing:"No sound found yet for this bird",confirmReset:"Reset all seen bird counts?",common:"Common",rareBird:"Rare",types:{songbird:"Songbird",raptor:"Raptor",water:"Water bird",parrot:"Parrot",owl:"Owl",woodpecker:"Woodpecker",shorebird:"Shorebird",seabird:"Seabird",gamebird:"Game bird",other:"Bird"},countries:{Israel:"Israel",USA:"USA",Brazil:"Brazil",Kenya:"Kenya",UK:"United Kingdom",India:"India",Australia:"Australia",Iceland:"Iceland"}},
-      he:{title:"מדריך הציפורים של רועי",subtitle:"מזהים ציפורים לפי מדינה, קול ונדירות",menu:"☰ תפריט",menuTitle:"תפריט",guide:"מדריך ציפורים",world:"מפה עולמית",seen:"הציפורים שראיתי",rare:"ציפורים נדירות",reset:"אפס ספירות",country:"מדינה",describe:"תאר את הציפור",placeholder:"כנף צהובה, מקור אדום, קטנה",type:"סוג ציפור",rarity:"נדירות",all:"הכול",hint:"טיפ: נסה “מקור אדום”, “עוף מים”, “דורס”, “כנף צהובה”, או בחר מדינה.",mediaNote:"התמונות נטענות אוטומטית מ־Wikipedia/Wikimedia. הקולות מחופשים מ־xeno-canto כשלוחצים 🔊.",possible:"ציפורים אפשריות",worldTitle:"מפת ציפורים עולמית",worldText:"בחר מדינה וראה אילו ציפורים נפוצות או נדירות יש בה.",count:n=>`${n} ציפורים`,seenCount:n=>n>0?`⭐ ראיתי ${n} פעמים`:"עוד לא ראיתי 👀",plusTitle:"ראיתי את הציפור",rarityWord:"נדירות",noResults:"לא נמצאה התאמה טובה. נסה פחות פרטים או מדינה אחרת.",soundMissing:"לא נמצא קול לציפור הזו",confirmReset:"לאפס את כל ספירות הציפורים שראיתי?",common:"נפוצה",rareBird:"נדירה",types:{songbird:"ציפור שיר",raptor:"עוף דורס",water:"עוף מים",parrot:"תוכי",owl:"דורס לילה",woodpecker:"נקר",shorebird:"עוף חוף",seabird:"עוף ים",gamebird:"עוף קרקע",other:"ציפור"},countries:{Israel:"ישראל",USA:"ארצות הברית",Brazil:"ברזיל",Kenya:"קניה",UK:"בריטניה",India:"הודו",Australia:"אוסטרליה",Iceland:"איסלנד"}}
+      en: {
+        title: "Roy's Bird Explorer",
+        subtitle: "100 birds, sounds, countries, and rarity",
+        menu: "☰ Menu", menuTitle: "Menu", guide: "Bird Guide", world: "World Map", seen: "My Birds", rare: "Rare Birds", reset: "Reset Seen Birds",
+        country: "Country", describe: "Describe the bird", placeholder: "yellow wing, red beak, small", type: "Bird type", rarity: "Rarity", all: "All",
+        hint: "Tip: choose a country, or try words like raptor, water, red beak, yellow wing, small, owl.",
+        mediaNote: "Sound: the site searches xeno-canto when 🔊 is pressed. If the browser blocks one file, it tries another recording.",
+        possible: "Birds", worldTitle: "World Bird Map", worldText: "Choose a country and discover birds there.", count: n => `${n} birds`,
+        seenCount: n => n > 0 ? `⭐ Seen ${n} times` : "Not seen yet 👀", plusTitle: "I saw this bird", rarityWord: "Rarity",
+        noResults: "No match. Try fewer details or another country.", soundMissing: "No playable sound was found for this bird right now.", soundLoading: "Finding sound...", confirmReset: "Reset all seen bird counts?",
+        common: "Common", rareBird: "Rare",
+        types: { songbird:"Songbird", raptor:"Raptor", water:"Water bird", parrot:"Parrot", owl:"Owl", woodpecker:"Woodpecker", shorebird:"Shorebird", seabird:"Seabird", gamebird:"Game bird", other:"Bird" },
+        countries: { Israel:"Israel", USA:"United States", Brazil:"Brazil", Kenya:"Kenya", UK:"United Kingdom", India:"India", Australia:"Australia", Iceland:"Iceland" }
+      },
+      he: {
+        title: "מדריך הציפורים של רועי",
+        subtitle: "100 ציפורים, קולות, מדינות ונדירות",
+        menu: "☰ תפריט", menuTitle: "תפריט", guide: "מדריך ציפורים", world: "מפה עולמית", seen: "הציפורים שראיתי", rare: "ציפורים נדירות", reset: "אפס ספירות",
+        country: "מדינה", describe: "תאר את הציפור", placeholder: "כנף צהובה, מקור אדום, קטנה", type: "סוג ציפור", rarity: "נדירות", all: "הכול",
+        hint: "טיפ: בחר מדינה, או נסה מילים כמו דורס, עוף מים, מקור אדום, כנף צהובה, קטנה, ינשוף.",
+        mediaNote: "קול: האתר מחפש ב־xeno-canto כשלוחצים 🔊. אם הדפדפן חוסם קובץ אחד, האתר מנסה הקלטה אחרת.",
+        possible: "ציפורים", worldTitle: "מפת ציפורים עולמית", worldText: "בחר מדינה וראה אילו ציפורים יש בה.", count: n => `${n} ציפורים`,
+        seenCount: n => n > 0 ? `⭐ ראיתי ${n} פעמים` : "עוד לא ראיתי 👀", plusTitle: "ראיתי את הציפור", rarityWord: "נדירות",
+        noResults: "לא נמצאה התאמה. נסה פחות פרטים או מדינה אחרת.", soundMissing: "לא נמצא כרגע קול שאפשר לנגן לציפור הזו.", soundLoading: "מחפש קול...", confirmReset: "לאפס את כל ספירות הציפורים?",
+        common: "נפוצה", rareBird: "נדירה",
+        types: { songbird:"ציפור שיר", raptor:"עוף דורס", water:"עוף מים", parrot:"תוכי", owl:"דורס לילה", woodpecker:"נקר", shorebird:"עוף חוף", seabird:"עוף ים", gamebird:"עוף קרקע", other:"ציפור" },
+        countries: { Israel:"ישראל", USA:"ארצות הברית", Brazil:"ברזיל", Kenya:"קניה", UK:"בריטניה", India:"הודו", Australia:"אוסטרליה", Iceland:"איסלנד" }
+      }
     };
 
-    const countryData = {
-      Israel:{common:["House Sparrow","White-spectacled Bulbul","Common Myna","Eurasian Collared Dove","Rock Dove","Hooded Crow","Jackdaw","Great Tit","Palestine Sunbird","Graceful Prinia","European Goldfinch","European Greenfinch","Laughing Dove","Rose-ringed Parakeet","Eurasian Hoopoe","White Wagtail","Barn Swallow","Common Swift","Little Egret","Grey Heron","Cattle Egret","Great Egret","Black-headed Gull","Yellow-legged Gull","Mallard","Common Kingfisher","White-throated Kingfisher","Syrian Woodpecker","Common Kestrel","Western Barn Owl","Little Owl","Eurasian Jay","Chukar Partridge","Spur-winged Lapwing","Northern Lapwing","Common Blackbird","Song Thrush","Sardinian Warbler","Blackcap","Chiffchaff","Spanish Sparrow","Dead Sea Sparrow","Tristram's Starling","Pied Kingfisher","European Bee-eater","Great Cormorant","White Stork","Glossy Ibis","Eurasian Spoonbill","Osprey"],rare:["Griffon Vulture","Lappet-faced Vulture","Egyptian Vulture","Imperial Eagle","Bonelli's Eagle","Saker Falcon","Macqueen's Bustard","Demoiselle Crane","Pallas's Gull","White-tailed Lapwing"]},
-      USA:{common:["American Robin","Northern Cardinal","Blue Jay","Mourning Dove","House Sparrow","European Starling","Red-winged Blackbird","American Crow","Mallard","Canada Goose","House Finch","American Goldfinch","Downy Woodpecker","Red-bellied Woodpecker","Northern Flicker","Tufted Titmouse","Black-capped Chickadee","Carolina Chickadee","White-breasted Nuthatch","Dark-eyed Junco","Song Sparrow","Chipping Sparrow","Eastern Bluebird","Western Bluebird","Barn Swallow","Tree Swallow","Purple Martin","Great Blue Heron","Great Egret","Killdeer","Ring-billed Gull","Herring Gull","Bald Eagle","Red-tailed Hawk","Cooper's Hawk","American Kestrel","Turkey Vulture","Great Horned Owl","Barred Owl","Barn Owl","Ruby-throated Hummingbird","Anna's Hummingbird","Rock Pigeon","Common Grackle","Brown-headed Cowbird","Northern Mockingbird","Cedar Waxwing","Yellow-rumped Warbler","Common Raven","American Coot"],rare:["Whooping Crane","California Condor","Ivory-billed Woodpecker","Kirtland's Warbler","Gunnison Sage-Grouse","Red-cockaded Woodpecker","Piping Plover","Florida Scrub-Jay","Bachman's Sparrow","Hawaiian Goose"]},
-      UK:{common:["House Sparrow","European Robin","Common Blackbird","Blue Tit","Great Tit","Coal Tit","Long-tailed Tit","Chaffinch","Goldfinch","Greenfinch","Dunnock","Wren","Wood Pigeon","Collared Dove","Feral Pigeon","Carrion Crow","Magpie","Jackdaw","Starling","Song Thrush","Mistle Thrush","Blackcap","Chiffchaff","Willow Warbler","Barn Swallow","House Martin","Swift","Mallard","Mute Swan","Canada Goose","Greylag Goose","Moorhen","Coot","Grey Heron","Little Egret","Black-headed Gull","Herring Gull","Lesser Black-backed Gull","Cormorant","Kestrel","Sparrowhawk","Buzzard","Red Kite","Tawny Owl","Barn Owl","Great Spotted Woodpecker","Green Woodpecker","Pied Wagtail","Nuthatch","Treecreeper"],rare:["White-tailed Eagle","Golden Eagle","Hen Harrier","Bittern","Corn Crake","Capercaillie","Cirl Bunting","Roseate Tern","Red-necked Phalarope","Atlantic Puffin"]},
-      Brazil:{common:["Rufous-bellied Thrush","Great Kiskadee","Sayaca Tanager","Blue-gray Tanager","Palm Tanager","Bananaquit","House Sparrow","Picazuro Pigeon","Eared Dove","Rock Pigeon","Southern Lapwing","Smooth-billed Ani","Guira Cuckoo","Tropical Kingbird","Social Flycatcher","Cattle Tyrant","Masked Water-Tyrant","White-winged Swallow","Southern House Wren","Chalk-browed Mockingbird","Saffron Finch","Double-collared Seedeater","Green-barred Woodpecker","Campo Flicker","Burrowing Owl","Roadside Hawk","Black Vulture","Turkey Vulture","Southern Caracara","Yellow-headed Caracara","Great Egret","Snowy Egret","Cattle Egret","Rufescent Tiger-Heron","Neotropic Cormorant","Magnificent Frigatebird","Roseate Spoonbill","Toco Toucan","Channel-billed Toucan","Red-and-green Macaw","Blue-and-yellow Macaw","Scarlet Macaw","Maroon-bellied Parakeet","Plain Parakeet","Brazilian Teal","Muscovy Duck","Wattled Jacana","Ruddy Ground Dove","Vermilion Flycatcher","Fork-tailed Flycatcher"],rare:["Hyacinth Macaw","Lear's Macaw","Spix's Macaw","Golden Parakeet","Red-browed Amazon","Alagoas Antwren","Araripe Manakin","Cherry-throated Tanager","Stresemann's Bristlefront","Brazilian Merganser"]},
-      Kenya:{common:["Superb Starling","Lilac-breasted Roller","Speckled Mousebird","Red-billed Hornbill","African Grey Hornbill","Pied Crow","House Sparrow","Red-cheeked Cordon-bleu","Village Weaver","Red-billed Quelea","Common Bulbul","White-browed Sparrow-Weaver","Cape Robin-Chat","African Paradise Flycatcher","Northern Fiscal","Black-headed Oriole","Hadada Ibis","Sacred Ibis","Cattle Egret","Little Egret","Great Egret","Grey Heron","Hamerkop","Marabou Stork","Yellow-billed Stork","African Fish Eagle","Black Kite","Augur Buzzard","Tawny Eagle","Bateleur","Secretarybird","Helmeted Guineafowl","Spotted Thick-knee","Blacksmith Lapwing","Crowned Lapwing","Egyptian Goose","Yellow-billed Duck","Spur-winged Goose","White-faced Whistling Duck","African Jacana","Pied Kingfisher","Malachite Kingfisher","Woodland Kingfisher","Little Bee-eater","White-throated Bee-eater","Grey-headed Kingfisher","Verreaux's Eagle-Owl","Pearl-spotted Owlet","African Palm Swift","Barn Swallow"],rare:["Taita Falcon","Madagascar Pond-Heron","Sokoke Scops Owl","Clarke's Weaver","Sharpe's Longclaw","Abbott's Starling","Grey-crested Helmetshrike","William's Lark","Hinde's Babbler","Basra Reed Warbler"]},
-      India:{common:["House Sparrow","Common Myna","Jungle Myna","Bank Myna","Red-vented Bulbul","Red-whiskered Bulbul","White-throated Kingfisher","Common Kingfisher","Pied Kingfisher","Rose-ringed Parakeet","Alexandrine Parakeet","Asian Koel","Greater Coucal","Black Drongo","Ashy Drongo","Indian Roller","Blue-tailed Bee-eater","Green Bee-eater","Indian Peafowl","Rock Pigeon","Spotted Dove","Laughing Dove","Eurasian Collared Dove","House Crow","Large-billed Crow","Common Tailorbird","Oriental Magpie-Robin","Purple Sunbird","Coppersmith Barbet","Brown-headed Barbet","Lineated Barbet","Black-rumped Flameback","White Wagtail","Grey Wagtail","Paddyfield Pipit","Barn Swallow","Red-rumped Swallow","Little Egret","Cattle Egret","Great Egret","Indian Pond Heron","Grey Heron","Asian Openbill","Black Kite","Shikra","Brahminy Kite","Crested Serpent Eagle","Barn Owl","Spotted Owlet","Asian Koel"],rare:["Great Indian Bustard","Bengal Florican","Jerdon's Courser","Forest Owlet","White-bellied Heron","Spoon-billed Sandpiper","Pink-headed Duck","Himalayan Quail","Narcondam Hornbill","Bugun Liocichla"]},
-      Australia:{common:["Australian Magpie","Magpie-lark","Willie Wagtail","Rainbow Lorikeet","Sulphur-crested Cockatoo","Galah","Little Corella","Noisy Miner","Welcome Swallow","Superb Fairywren","Australian Raven","Pied Currawong","Laughing Kookaburra","Australian King-Parrot","Crimson Rosella","Eastern Rosella","Common Myna","House Sparrow","Rock Pigeon","Crested Pigeon","Spotted Dove","Pacific Black Duck","Australian Wood Duck","Masked Lapwing","Silver Gull","Little Pied Cormorant","Great Cormorant","Australian Pelican","White-faced Heron","Great Egret","Royal Spoonbill","Australian White Ibis","Straw-necked Ibis","Black Swan","Dusky Moorhen","Eurasian Coot","Purple Swamphen","Black-shouldered Kite","Whistling Kite","Nankeen Kestrel","Brown Falcon","Southern Boobook","Barn Owl","Tawny Frogmouth","New Holland Honeyeater","Red Wattlebird","Rainbow Bee-eater","Zebra Finch","Red-browed Finch","Eastern Koel"],rare:["Orange-bellied Parrot","Night Parrot","Plains-wanderer","Regent Honeyeater","Helmeted Honeyeater","Swift Parrot","Western Ground Parrot","Mallee Emu-wren","Forty-spotted Pardalote","Gouldian Finch"]},
-      Iceland:{common:["Atlantic Puffin","Black-legged Kittiwake","Arctic Tern","Common Eider","Harlequin Duck","Mallard","Whooper Swan","Greylag Goose","Pink-footed Goose","Barnacle Goose","European Golden Plover","Common Ringed Plover","Purple Sandpiper","Dunlin","Red-necked Phalarope","Redshank","Whimbrel","Black-tailed Godwit","Snipe","Oystercatcher","Great Skua","Arctic Skua","Northern Fulmar","Manx Shearwater","European Storm Petrel","Northern Gannet","Great Cormorant","Shag","Herring Gull","Glaucous Gull","Great Black-backed Gull","Lesser Black-backed Gull","Black-headed Gull","Meadow Pipit","White Wagtail","Snow Bunting","Redwing","Common Raven","Merlin","Gyrfalcon","Short-eared Owl","Rock Ptarmigan","Razorbill","Common Murre","Thick-billed Murre","Little Auk","Tufted Duck","Long-tailed Duck","Red-breasted Merganser","Common Scoter"],rare:["White-tailed Eagle","Brunnich's Guillemot","King Eider","Barrow's Goldeneye","Sabine's Gull","Ivory Gull","Ross's Gull","Pectoral Sandpiper","American Golden Plover","Snowy Owl"]}
-    };
+    const countryList = ["Israel", "USA", "Brazil", "Kenya", "UK", "India", "Australia", "Iceland"];
+    const typeList = ["songbird", "raptor", "water", "parrot", "owl", "woodpecker", "shorebird", "seabird", "gamebird", "other"];
 
-    const heNames={"House Sparrow":"דרור הבית","White-spectacled Bulbul":"בולבול צהוב־שת","Common Myna":"מיינה מצויה","Eurasian Collared Dove":"צוצלת","Rock Dove":"יונת סלע","Hooded Crow":"עורב אפור","Great Tit":"ירגזי מצוי","Palestine Sunbird":"צופית בוהקת","Graceful Prinia":"פשוש","European Goldfinch":"חוחית","European Greenfinch":"ירקון","Rose-ringed Parakeet":"דררה","Eurasian Hoopoe":"דוכיפת","White Wagtail":"נחליאלי לבן","Barn Swallow":"סנונית רפתות","Common Swift":"סיס חומות","Little Egret":"לבנית קטנה","Grey Heron":"אנפה אפורה","Cattle Egret":"אנפית בקר","Great Egret":"לבנית גדולה","Mallard":"ברכיה","Common Kingfisher":"שלדג גמדי","White-throated Kingfisher":"שלדג לבן־חזה","Syrian Woodpecker":"נקר סורי","Common Kestrel":"בז מצוי","Western Barn Owl":"תנשמת לבנה","Little Owl":"כוס החורבות","Eurasian Jay":"עורבני","Chukar Partridge":"חוגלת סלעים","Spur-winged Lapwing":"סיקסק","Common Blackbird":"שחרור","Pied Kingfisher":"פרפור עקוד","European Bee-eater":"שרקרק מצוי","Great Cormorant":"קורמורן גדול","White Stork":"חסידה לבנה","Glossy Ibis":"מגלן חום","Eurasian Spoonbill":"כפן מצוי","Osprey":"שלך","Griffon Vulture":"נשר מקראי","Egyptian Vulture":"רחם מדברי","Imperial Eagle":"עיט שמש","Bonelli's Eagle":"עיט ניצי","Saker Falcon":"בז צוקים","Bald Eagle":"עיטם לבן־ראש","Northern Cardinal":"קרדינל צפוני","Blue Jay":"עורבני כחול","Canada Goose":"אווז קנדה","Turkey Vulture":"נשרון תרנגולי","Atlantic Puffin":"תוכי־ים אטלנטי","Toco Toucan":"טוקן טוקו","Scarlet Macaw":"ארה אדומה","Lilac-breasted Roller":"כחל לילכי","Laughing Kookaburra":"קוקברה צוחקת","Indian Peafowl":"טווס הודי","Black Kite":"דיה שחורה","Barn Owl":"תנשמת לבנה"};
+    const birds = [
+      {en:"House Sparrow", he:"דרור הבית", scientific:"Passer domesticus", type:"songbird", countries:["Israel","USA","UK","India","Australia","Brazil"], rarity:{Israel:1,USA:1,UK:1,India:1,Australia:2,Brazil:2}, tags:"small brown grey city short beak"},
+      {en:"White-spectacled Bulbul", he:"בולבול צהוב־שת", scientific:"Pycnonotus xanthopygos", type:"songbird", countries:["Israel"], rarity:{Israel:1}, tags:"grey black head yellow under tail common"},
+      {en:"Common Myna", he:"מיינה מצויה", scientific:"Acridotheres tristis", type:"songbird", countries:["Israel","India","Australia"], rarity:{Israel:1,India:1,Australia:2}, tags:"brown black head yellow eye city"},
+      {en:"Eurasian Collared Dove", he:"צוצלת", scientific:"Streptopelia decaocto", type:"songbird", countries:["Israel","UK","India"], rarity:{Israel:1,UK:1,India:1}, tags:"dove grey collar"},
+      {en:"Rock Dove", he:"יונת סלע", scientific:"Columba livia", type:"songbird", countries:["Israel","USA","UK","India","Australia","Brazil"], rarity:{Israel:1,USA:1,UK:1,India:1,Australia:1,Brazil:1}, tags:"pigeon grey city"},
+      {en:"Hooded Crow", he:"עורב אפור", scientific:"Corvus cornix", type:"songbird", countries:["Israel"], rarity:{Israel:1}, tags:"crow grey black large"},
+      {en:"Jackdaw", he:"קאק", scientific:"Coloeus monedula", type:"songbird", countries:["Israel","UK"], rarity:{Israel:2,UK:1}, tags:"crow small black grey"},
+      {en:"Great Tit", he:"ירגזי מצוי", scientific:"Parus major", type:"songbird", countries:["Israel","UK","India"], rarity:{Israel:1,UK:1,India:2}, tags:"small yellow black head white cheek"},
+      {en:"Palestine Sunbird", he:"צופית בוהקת", scientific:"Cinnyris osea", type:"songbird", countries:["Israel"], rarity:{Israel:1}, tags:"small shiny purple long beak nectar"},
+      {en:"Graceful Prinia", he:"פשוש", scientific:"Prinia gracilis", type:"songbird", countries:["Israel","India"], rarity:{Israel:1,India:2}, tags:"small brown long tail"},
+      {en:"European Goldfinch", he:"חוחית", scientific:"Carduelis carduelis", type:"songbird", countries:["Israel","UK","India"], rarity:{Israel:2,UK:2,India:4}, tags:"small red face yellow wing black wing"},
+      {en:"European Greenfinch", he:"ירקון", scientific:"Chloris chloris", type:"songbird", countries:["Israel","UK"], rarity:{Israel:2,UK:2}, tags:"green yellow wing small"},
+      {en:"Laughing Dove", he:"תור צווארון", scientific:"Spilopelia senegalensis", type:"songbird", countries:["Israel","India"], rarity:{Israel:1,India:1}, tags:"dove brown pink neck"},
+      {en:"Rose-ringed Parakeet", he:"דררה", scientific:"Psittacula krameri", type:"parrot", countries:["Israel","India","UK"], rarity:{Israel:1,India:1,UK:3}, tags:"green red beak long tail parrot"},
+      {en:"Eurasian Hoopoe", he:"דוכיפת", scientific:"Upupa epops", type:"songbird", countries:["Israel","India","Kenya"], rarity:{Israel:1,India:2,Kenya:3}, tags:"crest orange black white long beak"},
+      {en:"White Wagtail", he:"נחליאלי לבן", scientific:"Motacilla alba", type:"songbird", countries:["Israel","UK","India","Iceland"], rarity:{Israel:1,UK:2,India:2,Iceland:1}, tags:"black white tail"},
+      {en:"Barn Swallow", he:"סנונית רפתות", scientific:"Hirundo rustica", type:"songbird", countries:["Israel","USA","UK","Kenya","India","Iceland"], rarity:{Israel:1,USA:1,UK:1,Kenya:1,India:1,Iceland:2}, tags:"swallow long tail blue red throat"},
+      {en:"Common Swift", he:"סיס חומות", scientific:"Apus apus", type:"songbird", countries:["Israel","UK","India"], rarity:{Israel:1,UK:1,India:2}, tags:"fast dark sky"},
+      {en:"Little Egret", he:"לבנית קטנה", scientific:"Egretta garzetta", type:"water", countries:["Israel","UK","India","Kenya","Australia"], rarity:{Israel:1,UK:3,India:1,Kenya:2,Australia:2}, tags:"white water black beak long neck"},
+      {en:"Grey Heron", he:"אנפה אפורה", scientific:"Ardea cinerea", type:"water", countries:["Israel","UK","India","Kenya","Iceland"], rarity:{Israel:2,UK:1,India:2,Kenya:2,Iceland:3}, tags:"grey water long neck long beak"},
+      {en:"Cattle Egret", he:"אנפית בקר", scientific:"Bubulcus ibis", type:"water", countries:["Israel","India","Kenya","Brazil","Australia"], rarity:{Israel:1,India:1,Kenya:1,Brazil:1,Australia:2}, tags:"white cattle orange head"},
+      {en:"Great Egret", he:"לבנית גדולה", scientific:"Ardea alba", type:"water", countries:["Israel","USA","UK","India","Kenya","Australia","Brazil"], rarity:{Israel:2,USA:1,UK:3,India:1,Kenya:2,Australia:2,Brazil:1}, tags:"large white water long neck"},
+      {en:"Black-headed Gull", he:"שחף אגמים", scientific:"Chroicocephalus ridibundus", type:"seabird", countries:["Israel","UK","Iceland"], rarity:{Israel:2,UK:1,Iceland:2}, tags:"gull white grey black head"},
+      {en:"Yellow-legged Gull", he:"שחף צהוב־רגל", scientific:"Larus michahellis", type:"seabird", countries:["Israel"], rarity:{Israel:2}, tags:"gull yellow legs large"},
+      {en:"Mallard", he:"ברכיה", scientific:"Anas platyrhynchos", type:"water", countries:["Israel","USA","UK","India","Iceland"], rarity:{Israel:2,USA:1,UK:1,India:2,Iceland:1}, tags:"duck green head water"},
+      {en:"Common Kingfisher", he:"שלדג גמדי", scientific:"Alcedo atthis", type:"water", countries:["Israel","UK","India"], rarity:{Israel:2,UK:2,India:2}, tags:"blue orange small water"},
+      {en:"White-throated Kingfisher", he:"שלדג לבן־חזה", scientific:"Halcyon smyrnensis", type:"water", countries:["Israel","India"], rarity:{Israel:2,India:1}, tags:"blue wing red beak white chest brown head"},
+      {en:"Syrian Woodpecker", he:"נקר סורי", scientific:"Dendrocopos syriacus", type:"woodpecker", countries:["Israel"], rarity:{Israel:2}, tags:"woodpecker black white red head"},
+      {en:"Common Kestrel", he:"בז מצוי", scientific:"Falco tinnunculus", type:"raptor", countries:["Israel","UK","Kenya","India"], rarity:{Israel:2,UK:2,Kenya:2,India:3}, tags:"falcon brown spotted raptor"},
+      {en:"Western Barn Owl", he:"תנשמת לבנה", scientific:"Tyto alba", type:"owl", countries:["Israel","UK","USA","Australia","India"], rarity:{Israel:2,UK:2,USA:2,Australia:2,India:2}, tags:"owl white face night pale"},
+      {en:"Little Owl", he:"כוס החורבות", scientific:"Athene noctua", type:"owl", countries:["Israel","UK","India"], rarity:{Israel:2,UK:3,India:3}, tags:"small owl yellow eyes"},
+      {en:"Eurasian Jay", he:"עורבני", scientific:"Garrulus glandarius", type:"songbird", countries:["Israel","UK","India"], rarity:{Israel:2,UK:1,India:3}, tags:"blue wing brown crow family"},
+      {en:"Chukar Partridge", he:"חוגלת סלעים", scientific:"Alectoris chukar", type:"gamebird", countries:["Israel","India"], rarity:{Israel:2,India:3}, tags:"ground bird striped side red beak"},
+      {en:"Spur-winged Lapwing", he:"סיקסק", scientific:"Vanellus spinosus", type:"shorebird", countries:["Israel","Kenya"], rarity:{Israel:1,Kenya:2}, tags:"black white brown loud shorebird"},
+      {en:"Common Blackbird", he:"שחרור", scientific:"Turdus merula", type:"songbird", countries:["Israel","UK"], rarity:{Israel:2,UK:1}, tags:"black orange beak songbird"},
+      {en:"Song Thrush", he:"קיכלי רונן", scientific:"Turdus philomelos", type:"songbird", countries:["Israel","UK"], rarity:{Israel:3,UK:1}, tags:"brown spotted chest"},
+      {en:"Sardinian Warbler", he:"סבכי שחור־ראש", scientific:"Curruca melanocephala", type:"songbird", countries:["Israel"], rarity:{Israel:2}, tags:"small grey black head red eye"},
+      {en:"Blackcap", he:"סבכי שחור כיפה", scientific:"Sylvia atricapilla", type:"songbird", countries:["Israel","UK"], rarity:{Israel:2,UK:1}, tags:"small grey black cap"},
+      {en:"Chiffchaff", he:"עלווית חורף", scientific:"Phylloscopus collybita", type:"songbird", countries:["Israel","UK"], rarity:{Israel:2,UK:1}, tags:"small olive songbird"},
+      {en:"Spanish Sparrow", he:"דרור ספרדי", scientific:"Passer hispaniolensis", type:"songbird", countries:["Israel"], rarity:{Israel:2}, tags:"sparrow brown black chest"},
+      {en:"Tristram's Starling", he:"טריסטרמית", scientific:"Onychognathus tristramii", type:"songbird", countries:["Israel"], rarity:{Israel:3}, tags:"black orange wing desert"},
+      {en:"Pied Kingfisher", he:"פרפור עקוד", scientific:"Ceryle rudis", type:"water", countries:["Israel","India","Kenya"], rarity:{Israel:2,India:1,Kenya:1}, tags:"black white kingfisher water"},
+      {en:"European Bee-eater", he:"שרקרק מצוי", scientific:"Merops apiaster", type:"songbird", countries:["Israel","Kenya","India"], rarity:{Israel:2,Kenya:2,India:3}, tags:"colorful yellow throat blue green"},
+      {en:"Great Cormorant", he:"קורמורן גדול", scientific:"Phalacrocorax carbo", type:"water", countries:["Israel","UK","India","Australia","Iceland"], rarity:{Israel:2,UK:1,India:2,Australia:1,Iceland:1}, tags:"black water diving"},
+      {en:"White Stork", he:"חסידה לבנה", scientific:"Ciconia ciconia", type:"water", countries:["Israel","Kenya","India"], rarity:{Israel:2,Kenya:2,India:3}, tags:"large white black wings red beak"},
+      {en:"Glossy Ibis", he:"מגלן חום", scientific:"Plegadis falcinellus", type:"water", countries:["Israel","India","Kenya","Brazil"], rarity:{Israel:2,India:2,Kenya:2,Brazil:2}, tags:"brown curved beak water"},
+      {en:"Eurasian Spoonbill", he:"כפן מצוי", scientific:"Platalea leucorodia", type:"water", countries:["Israel","India","Kenya"], rarity:{Israel:3,India:2,Kenya:3}, tags:"white spoon bill water"},
+      {en:"Osprey", he:"שלך", scientific:"Pandion haliaetus", type:"raptor", countries:["Israel","USA","UK","India","Australia","Iceland"], rarity:{Israel:3,USA:2,UK:3,India:3,Australia:3,Iceland:4}, tags:"fish eagle raptor water"},
+      {en:"Griffon Vulture", he:"נשר מקראי", scientific:"Gyps fulvus", type:"raptor", countries:["Israel","India"], rarity:{Israel:4,India:5}, tags:"vulture large brown pale neck"},
+      {en:"Egyptian Vulture", he:"רחם מדברי", scientific:"Neophron percnopterus", type:"raptor", countries:["Israel","India","Kenya"], rarity:{Israel:5,India:4,Kenya:4}, tags:"vulture white yellow face rare"},
+      {en:"Bonelli's Eagle", he:"עיט ניצי", scientific:"Aquila fasciata", type:"raptor", countries:["Israel","India"], rarity:{Israel:5,India:4}, tags:"eagle raptor rare"},
+      {en:"Saker Falcon", he:"בז צוקים", scientific:"Falco cherrug", type:"raptor", countries:["Israel","India"], rarity:{Israel:5,India:5}, tags:"falcon rare raptor"},
+      {en:"Macqueen's Bustard", he:"חוברה מדברית", scientific:"Chlamydotis macqueenii", type:"gamebird", countries:["Israel","India"], rarity:{Israel:5,India:5}, tags:"bustard desert rare"},
+      {en:"American Robin", he:"American Robin", scientific:"Turdus migratorius", type:"songbird", countries:["USA"], rarity:{USA:1}, tags:"orange chest grey songbird"},
+      {en:"Northern Cardinal", he:"Northern Cardinal", scientific:"Cardinalis cardinalis", type:"songbird", countries:["USA"], rarity:{USA:1}, tags:"red bird crest"},
+      {en:"Blue Jay", he:"Blue Jay", scientific:"Cyanocitta cristata", type:"songbird", countries:["USA"], rarity:{USA:1}, tags:"blue crest black white"},
+      {en:"Mourning Dove", he:"Mourning Dove", scientific:"Zenaida macroura", type:"songbird", countries:["USA"], rarity:{USA:1}, tags:"dove brown small"},
+      {en:"Red-winged Blackbird", he:"Red-winged Blackbird", scientific:"Agelaius phoeniceus", type:"songbird", countries:["USA"], rarity:{USA:1}, tags:"black red wing marsh"},
+      {en:"American Crow", he:"American Crow", scientific:"Corvus brachyrhynchos", type:"songbird", countries:["USA"], rarity:{USA:1}, tags:"crow black large"},
+      {en:"Canada Goose", he:"Canada Goose", scientific:"Branta canadensis", type:"water", countries:["USA","UK","Iceland"], rarity:{USA:1,UK:2,Iceland:3}, tags:"goose black neck white chin"},
+      {en:"House Finch", he:"House Finch", scientific:"Haemorhous mexicanus", type:"songbird", countries:["USA"], rarity:{USA:1}, tags:"small red head brown"},
+      {en:"American Goldfinch", he:"American Goldfinch", scientific:"Spinus tristis", type:"songbird", countries:["USA"], rarity:{USA:1}, tags:"yellow black wing small"},
+      {en:"Downy Woodpecker", he:"Downy Woodpecker", scientific:"Dryobates pubescens", type:"woodpecker", countries:["USA"], rarity:{USA:1}, tags:"woodpecker black white red head"},
+      {en:"Red-tailed Hawk", he:"Red-tailed Hawk", scientific:"Buteo jamaicensis", type:"raptor", countries:["USA"], rarity:{USA:1}, tags:"hawk raptor red tail"},
+      {en:"Bald Eagle", he:"Bald Eagle", scientific:"Haliaeetus leucocephalus", type:"raptor", countries:["USA"], rarity:{USA:2}, tags:"eagle white head brown body"},
+      {en:"Turkey Vulture", he:"Turkey Vulture", scientific:"Cathartes aura", type:"raptor", countries:["USA","Brazil"], rarity:{USA:1,Brazil:1}, tags:"vulture red head black"},
+      {en:"Great Horned Owl", he:"Great Horned Owl", scientific:"Bubo virginianus", type:"owl", countries:["USA"], rarity:{USA:2}, tags:"owl ear tufts large"},
+      {en:"Whooping Crane", he:"Whooping Crane", scientific:"Grus americana", type:"water", countries:["USA"], rarity:{USA:5}, tags:"crane white rare"},
+      {en:"California Condor", he:"California Condor", scientific:"Gymnogyps californianus", type:"raptor", countries:["USA"], rarity:{USA:5}, tags:"condor vulture rare huge"},
+      {en:"Rufous-bellied Thrush", he:"Rufous-bellied Thrush", scientific:"Turdus rufiventris", type:"songbird", countries:["Brazil"], rarity:{Brazil:1}, tags:"orange belly brown"},
+      {en:"Great Kiskadee", he:"Great Kiskadee", scientific:"Pitangus sulphuratus", type:"songbird", countries:["Brazil"], rarity:{Brazil:1}, tags:"yellow belly black white head"},
+      {en:"Sayaca Tanager", he:"Sayaca Tanager", scientific:"Thraupis sayaca", type:"songbird", countries:["Brazil"], rarity:{Brazil:1}, tags:"blue grey tanager"},
+      {en:"Blue-gray Tanager", he:"Blue-gray Tanager", scientific:"Thraupis episcopus", type:"songbird", countries:["Brazil"], rarity:{Brazil:1}, tags:"blue grey tanager"},
+      {en:"Toco Toucan", he:"Toco Toucan", scientific:"Ramphastos toco", type:"songbird", countries:["Brazil"], rarity:{Brazil:2}, tags:"huge orange beak black white"},
+      {en:"Scarlet Macaw", he:"Scarlet Macaw", scientific:"Ara macao", type:"parrot", countries:["Brazil"], rarity:{Brazil:3}, tags:"red blue yellow parrot"},
+      {en:"Hyacinth Macaw", he:"Hyacinth Macaw", scientific:"Anodorhynchus hyacinthinus", type:"parrot", countries:["Brazil"], rarity:{Brazil:5}, tags:"blue macaw rare large"},
+      {en:"Brazilian Merganser", he:"Brazilian Merganser", scientific:"Mergus octosetaceus", type:"water", countries:["Brazil"], rarity:{Brazil:5}, tags:"duck rare water"},
+      {en:"Superb Starling", he:"Superb Starling", scientific:"Lamprotornis superbus", type:"songbird", countries:["Kenya"], rarity:{Kenya:1}, tags:"colorful blue orange starling"},
+      {en:"Lilac-breasted Roller", he:"Lilac-breasted Roller", scientific:"Coracias caudatus", type:"songbird", countries:["Kenya"], rarity:{Kenya:1}, tags:"colorful blue lilac green"},
+      {en:"Speckled Mousebird", he:"Speckled Mousebird", scientific:"Colius striatus", type:"songbird", countries:["Kenya"], rarity:{Kenya:1}, tags:"brown long tail crest"},
+      {en:"Red-billed Hornbill", he:"Red-billed Hornbill", scientific:"Tockus erythrorhynchus", type:"songbird", countries:["Kenya"], rarity:{Kenya:1}, tags:"red bill hornbill"},
+      {en:"African Fish Eagle", he:"African Fish Eagle", scientific:"Icthyophaga vocifer", type:"raptor", countries:["Kenya"], rarity:{Kenya:1}, tags:"eagle white head fish"},
+      {en:"Secretarybird", he:"Secretarybird", scientific:"Sagittarius serpentarius", type:"raptor", countries:["Kenya"], rarity:{Kenya:3}, tags:"long legs raptor crest"},
+      {en:"Taita Falcon", he:"Taita Falcon", scientific:"Falco fasciinucha", type:"raptor", countries:["Kenya"], rarity:{Kenya:5}, tags:"falcon rare"},
+      {en:"Sokoke Scops Owl", he:"Sokoke Scops Owl", scientific:"Otus ireneae", type:"owl", countries:["Kenya"], rarity:{Kenya:5}, tags:"owl rare forest"},
+      {en:"European Robin", he:"European Robin", scientific:"Erithacus rubecula", type:"songbird", countries:["UK"], rarity:{UK:1}, tags:"orange chest small"},
+      {en:"Blue Tit", he:"Blue Tit", scientific:"Cyanistes caeruleus", type:"songbird", countries:["UK"], rarity:{UK:1}, tags:"blue yellow small"},
+      {en:"Chaffinch", he:"Chaffinch", scientific:"Fringilla coelebs", type:"songbird", countries:["UK"], rarity:{UK:1}, tags:"pink chest blue head"},
+      {en:"Wren", he:"Wren", scientific:"Troglodytes troglodytes", type:"songbird", countries:["UK","Iceland"], rarity:{UK:1,Iceland:2}, tags:"tiny brown tail"},
+      {en:"Wood Pigeon", he:"Wood Pigeon", scientific:"Columba palumbus", type:"songbird", countries:["UK"], rarity:{UK:1}, tags:"large pigeon white neck"},
+      {en:"Red Kite", he:"Red Kite", scientific:"Milvus milvus", type:"raptor", countries:["UK"], rarity:{UK:2}, tags:"raptor forked tail"},
+      {en:"Atlantic Puffin", he:"Atlantic Puffin", scientific:"Fratercula arctica", type:"seabird", countries:["Iceland","UK"], rarity:{Iceland:2,UK:4}, tags:"orange beak black white sea bird"},
+      {en:"White-tailed Eagle", he:"White-tailed Eagle", scientific:"Haliaeetus albicilla", type:"raptor", countries:["UK","Iceland"], rarity:{UK:4,Iceland:4}, tags:"eagle white tail rare"},
+      {en:"Indian Peafowl", he:"Indian Peafowl", scientific:"Pavo cristatus", type:"gamebird", countries:["India"], rarity:{India:1}, tags:"peacock blue long tail"},
+      {en:"Black Drongo", he:"Black Drongo", scientific:"Dicrurus macrocercus", type:"songbird", countries:["India"], rarity:{India:1}, tags:"black forked tail"},
+      {en:"Asian Koel", he:"Asian Koel", scientific:"Eudynamys scolopaceus", type:"songbird", countries:["India"], rarity:{India:1}, tags:"black cuckoo red eye"},
+      {en:"Green Bee-eater", he:"Green Bee-eater", scientific:"Merops orientalis", type:"songbird", countries:["India","Kenya"], rarity:{India:1,Kenya:2}, tags:"green small long beak"},
+      {en:"Great Indian Bustard", he:"Great Indian Bustard", scientific:"Ardeotis nigriceps", type:"gamebird", countries:["India"], rarity:{India:5}, tags:"bustard rare large"},
+      {en:"Forest Owlet", he:"Forest Owlet", scientific:"Athene blewitti", type:"owl", countries:["India"], rarity:{India:5}, tags:"owl rare forest"},
+      {en:"Australian Magpie", he:"Australian Magpie", scientific:"Gymnorhina tibicen", type:"songbird", countries:["Australia"], rarity:{Australia:1}, tags:"black white songbird"},
+      {en:"Rainbow Lorikeet", he:"Rainbow Lorikeet", scientific:"Trichoglossus moluccanus", type:"parrot", countries:["Australia"], rarity:{Australia:1}, tags:"colorful parrot rainbow"},
+      {en:"Sulphur-crested Cockatoo", he:"Sulphur-crested Cockatoo", scientific:"Cacatua galerita", type:"parrot", countries:["Australia"], rarity:{Australia:1}, tags:"white yellow crest parrot"},
+      {en:"Laughing Kookaburra", he:"Laughing Kookaburra", scientific:"Dacelo novaeguineae", type:"songbird", countries:["Australia"], rarity:{Australia:1}, tags:"large head brown white laughing"},
+      {en:"Black Swan", he:"Black Swan", scientific:"Cygnus atratus", type:"water", countries:["Australia"], rarity:{Australia:1}, tags:"black swan red beak"},
+      {en:"Orange-bellied Parrot", he:"Orange-bellied Parrot", scientific:"Neophema chrysogaster", type:"parrot", countries:["Australia"], rarity:{Australia:5}, tags:"parrot rare orange belly"},
+      {en:"Arctic Tern", he:"Arctic Tern", scientific:"Sterna paradisaea", type:"seabird", countries:["Iceland","UK"], rarity:{Iceland:1,UK:3}, tags:"tern white black cap red beak"},
+      {en:"Common Eider", he:"Common Eider", scientific:"Somateria mollissima", type:"water", countries:["Iceland","UK"], rarity:{Iceland:1,UK:3}, tags:"duck sea bird"},
+      {en:"Whooper Swan", he:"Whooper Swan", scientific:"Cygnus cygnus", type:"water", countries:["Iceland","UK"], rarity:{Iceland:1,UK:3}, tags:"white swan yellow beak"},
+      {en:"Gyrfalcon", he:"Gyrfalcon", scientific:"Falco rusticolus", type:"raptor", countries:["Iceland"], rarity:{Iceland:3}, tags:"falcon large arctic"},
+      {en:"Snowy Owl", he:"Snowy Owl", scientific:"Bubo scandiacus", type:"owl", countries:["Iceland","USA"], rarity:{Iceland:5,USA:4}, tags:"white owl arctic rare"},
+      {en:"Rock Ptarmigan", he:"Rock Ptarmigan", scientific:"Lagopus muta", type:"gamebird", countries:["Iceland","UK"], rarity:{Iceland:1,UK:4}, tags:"ground bird white winter"}
+    ];
 
-    const countryList=Object.keys(countryData);
-    const typeList=["songbird","raptor","water","parrot","owl","woodpecker","shorebird","seabird","gamebird","other"];
-    const slug=s=>s.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
-    function inferType(name){const n=name.toLowerCase();if(/eagle|hawk|falcon|kestrel|buzzard|kite|vulture|condor|osprey|harrier|caracara|secretarybird/.test(n))return"raptor";if(/owl|boobook|owlet/.test(n))return"owl";if(/duck|goose|swan|egret|heron|ibis|spoonbill|stork|pelican|cormorant|moorhen|coot|jacana|kingfisher|flamingo|water|merganser|scoter/.test(n))return"water";if(/gull|tern|puffin|skua|petrel|shearwater|gannet|fulmar|auk|murre|guillemot|frigatebird|kittiwake/.test(n))return"seabird";if(/parakeet|parrot|macaw|cockatoo|lorikeet|rosella|corella|amazon/.test(n))return"parrot";if(/woodpecker|flicker|flameback/.test(n))return"woodpecker";if(/lapwing|plover|sandpiper|snipe|godwit|redshank|oystercatcher|courser|phalarope/.test(n))return"shorebird";if(/partridge|quail|grouse|ptarmigan|guineafowl|peafowl|bustard/.test(n))return"gamebird";return"songbird"}
-    function buildBirds(){const map={};countryList.forEach(country=>{["common","rare"].forEach(group=>{countryData[country][group].forEach(name=>{const id=slug(name);if(!map[id])map[id]={id,name:{en:name,he:heNames[name]||name},type:inferType(name),countries:[],rarity:{}};if(!map[id].countries.includes(country))map[id].countries.push(country);map[id].rarity[country]=group==="rare"?5:1;});});});return Object.values(map)}
-    const birds=buildBirds();
-    let lang=localStorage.getItem("birdLang")||((navigator.language||"").startsWith("he")?"he":"en"),currentView="guide",seenCounts=JSON.parse(localStorage.getItem("birdSeenCountsWorld")||"{}"),currentAudio=null;
-    const grid=document.getElementById("birdsGrid"),countEl=document.getElementById("count"),countrySelect=document.getElementById("countrySelect"),typeSelect=document.getElementById("typeSelect"),raritySelect=document.getElementById("raritySelect"),freeText=document.getElementById("freeText");
-    function tr(){return translations[lang]}function birdName(b){return b.name[lang]||b.name.en}function rarityStars(n){return"⭐".repeat(n||1)}function getBirdRarity(b,c){return b.rarity[c]||Math.min(...Object.values(b.rarity))}function normalize(t){return String(t||"").trim().toLowerCase()}
-    function setLanguage(newLang){lang=newLang;localStorage.setItem("birdLang",lang);document.documentElement.lang=lang;document.documentElement.dir=lang==="he"?"rtl":"ltr";applyLanguage();filterBirds()}
-    function applyLanguage(){const t=tr();document.title=t.title;title.textContent=t.title;subtitle.textContent=t.subtitle;menuBtn.textContent=t.menu;menuTitle.textContent=t.menuTitle;menuGuide.textContent=t.guide;menuWorld.textContent=t.world;menuSeen.textContent=t.seen;menuRare.textContent=t.rare;menuReset.textContent=t.reset;countryLabel.textContent=t.country;freeTextLabel.textContent=t.describe;typeLabel.textContent=t.type;rarityLabel.textContent=t.rarity;hintText.textContent=t.hint;mediaNote.textContent=t.mediaNote;resultsTitle.textContent=currentView==="world"?t.worldTitle:t.possible;worldTitle.textContent=t.worldTitle;worldText.textContent=t.worldText;freeText.placeholder=t.placeholder;enBtn.classList.toggle("active",lang==="en");heBtn.classList.toggle("active",lang==="he");buildCountrySelect();buildTypeSelect();buildCountryButtons()}
-    function buildCountrySelect(){const selected=countrySelect.value||"Israel";countrySelect.innerHTML=`<option value="">${tr().all}</option>`;countryList.forEach(c=>{const o=document.createElement("option");o.value=c;o.textContent=tr().countries[c]||c;countrySelect.appendChild(o)});countrySelect.value=selected}
-    function buildTypeSelect(){const selected=typeSelect.value;typeSelect.innerHTML=`<option value="">${tr().all}</option>`;typeList.forEach(type=>{const o=document.createElement("option");o.value=type;o.textContent=tr().types[type]||type;typeSelect.appendChild(o)});typeSelect.value=selected}
-    function buildCountryButtons(){countryButtons.innerHTML="";countryList.forEach(c=>{const btn=document.createElement("button");btn.textContent=tr().countries[c]||c;btn.className=countrySelect.value===c?"active":"";btn.onclick=()=>{countrySelect.value=c;filterBirds()};countryButtons.appendChild(btn)})}
-    function toggleMenu(open){menuDrawer.classList.toggle("open",open);overlay.classList.toggle("open",open)}function setView(view){currentView=view;toggleMenu(false);worldView.classList.toggle("hidden",view!=="world");resultsTitle.textContent=view==="world"?tr().worldTitle:tr().possible;filterBirds()}
-    function scoreBird(b,terms){const text=normalize([birdName(b),b.name.en,b.name.he,b.type,tr().types[b.type],...b.countries].join(" "));let score=0;terms.forEach(term=>{if(text.includes(term))score++});return score}
-    function filterBirds(){const country=countrySelect.value,type=typeSelect.value,rarity=raritySelect.value,terms=normalize(freeText.value).split(/\s+/).filter(Boolean);let list=birds.map(b=>({bird:b,score:scoreBird(b,terms),rarityValue:getBirdRarity(b,country||b.countries[0])}));if(country)list=list.filter(x=>x.bird.countries.includes(country));if(type)list=list.filter(x=>x.bird.type===type);if(rarity)list=list.filter(x=>x.rarityValue>=Number(rarity));if(terms.length)list=list.filter(x=>x.score>0);if(currentView==="seen")list=list.filter(x=>(seenCounts[x.bird.id]||0)>0);if(currentView==="rare")list=list.filter(x=>x.rarityValue>=5);list.sort((a,b)=>{const seen=(seenCounts[b.bird.id]||0)-(seenCounts[a.bird.id]||0);if(seen)return seen;if(terms.length&&b.score!==a.score)return b.score-a.score;return b.rarityValue-a.rarityValue});renderBirds(list);buildCountryButtons()}
-    function renderBirds(list){grid.innerHTML="";countEl.textContent=tr().count(list.length);if(!list.length){grid.innerHTML=`<div style="grid-column:1/-1;text-align:center;color:#64748b;font-size:20px;padding:38px 10px;">${tr().noResults}</div>`;return}list.forEach(({bird,rarityValue})=>{const card=document.createElement("article");card.className="bird-card";const countries=bird.countries.map(c=>tr().countries[c]||c).join(", ");card.innerHTML=`<div class="image-wrap"><img id="img-${bird.id}" src="${FALLBACK_IMAGE}" alt="${birdName(bird)}" loading="lazy"><button class="sound-btn" id="sound-${bird.id}" title="Sound" onclick="playSound('${bird.id}')">🔊</button></div><div class="bird-card-content"><div class="bird-title-row"><div><div class="bird-name">${birdName(bird)}</div><div class="latin">${bird.name.en}</div></div><button class="plus-btn" title="${tr().plusTitle}" onclick="addSeen('${bird.id}')">+</button></div><div class="seen-count">${tr().seenCount(seenCounts[bird.id]||0)}</div><div class="rarity">${tr().rarityWord}: ${rarityStars(rarityValue)} ${rarityValue>=5?` · ${tr().rareBird}`:` · ${tr().common}`}</div><div class="tags"><span class="tag">${tr().types[bird.type]||bird.type}</span><span class="tag">${countries}</span></div></div>`;grid.appendChild(card);loadImageForBird(bird)})}
-    async function loadImageForBird(bird){const img=document.getElementById(`img-${bird.id}`);if(!img)return;const key=`birdImage:${bird.id}`;const cached=localStorage.getItem(key);if(cached){img.src=cached;return}try{const res=await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(bird.name.en)}`);if(!res.ok)throw new Error("no image");const data=await res.json();const image=data.thumbnail?.source||data.originalimage?.source;if(image){localStorage.setItem(key,image);img.src=image}else img.src=FALLBACK_IMAGE}catch(e){img.src=FALLBACK_IMAGE}}
-    async function findSoundForBird(bird){const key=`birdSound:${bird.id}`;const cached=localStorage.getItem(key);if(cached)return cached;const country=countrySelect.value;const q=country?`${bird.name.en} cnt:${country}`:bird.name.en;try{const res=await fetch(`https://xeno-canto.org/api/3/recordings?query=${encodeURIComponent(q)}`);if(!res.ok)throw new Error("no sound");const data=await res.json();const rec=(data.recordings||[]).find(r=>r.file);if(!rec)return"";let file=rec.file;if(file.startsWith("//"))file="https:"+file;if(file.startsWith("/"))file="https://xeno-canto.org"+file;localStorage.setItem(key,file);return file}catch(e){return""}}
-    async function playSound(id){const bird=birds.find(b=>b.id===id);if(!bird)return;const btn=document.getElementById(`sound-${id}`);if(btn)btn.textContent="⏳";const url=await findSoundForBird(bird);if(btn)btn.textContent="🔊";if(!url){alert(tr().soundMissing);return}if(currentAudio){currentAudio.pause();currentAudio.currentTime=0}currentAudio=new Audio(url);currentAudio.play().catch(()=>alert(tr().soundMissing))}
-    function addSeen(id){seenCounts[id]=(seenCounts[id]||0)+1;localStorage.setItem("birdSeenCountsWorld",JSON.stringify(seenCounts));filterBirds()}function resetSeen(){if(!confirm(tr().confirmReset))return;seenCounts={};localStorage.setItem("birdSeenCountsWorld",JSON.stringify(seenCounts));filterBirds();toggleMenu(false)}document.addEventListener("keydown",e=>{if(e.key==="Escape")toggleMenu(false)});setLanguage(lang);countrySelect.value="Israel";filterBirds();
+    let lang = localStorage.getItem("birdLang") || ((navigator.language || "").startsWith("he") ? "he" : "en");
+    let currentView = "guide";
+    let seenCounts = JSON.parse(localStorage.getItem("birdSeenCountsV3") || "{}");
+    let currentAudio = null;
+
+    const grid = document.getElementById("birdsGrid");
+    const countEl = document.getElementById("count");
+    const countrySelect = document.getElementById("countrySelect");
+    const typeSelect = document.getElementById("typeSelect");
+    const raritySelect = document.getElementById("raritySelect");
+    const freeText = document.getElementById("freeText");
+
+    function tr(){ return translations[lang]; }
+    function slug(s){ return s.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,""); }
+    birds.forEach(b => b.id = slug(b.en));
+    function normalize(s){ return String(s || "").toLowerCase().trim(); }
+    function selectedCountry(){ return countrySelect.value || "Israel"; }
+
+    function displayName(bird){
+      const country = selectedCountry();
+      if (lang === "he" && country === "Israel") return bird.he || bird.en;
+      return bird.en;
+    }
+
+    function rarityStars(n){ return "⭐".repeat(n || 1); }
+    function getRarity(bird, country){ return bird.rarity[country] || Math.min(...Object.values(bird.rarity)); }
+
+    function setLanguage(newLang){
+      lang = newLang;
+      localStorage.setItem("birdLang", lang);
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === "he" ? "rtl" : "ltr";
+      applyLanguage();
+      filterBirds();
+    }
+
+    function applyLanguage(){
+      const t = tr();
+      document.title = t.title;
+      title.textContent = t.title;
+      subtitle.textContent = t.subtitle;
+      menuBtn.textContent = t.menu;
+      menuTitle.textContent = t.menuTitle;
+      menuGuide.textContent = t.guide;
+      menuWorld.textContent = t.world;
+      menuSeen.textContent = t.seen;
+      menuRare.textContent = t.rare;
+      menuReset.textContent = t.reset;
+      countryLabel.textContent = t.country;
+      freeTextLabel.textContent = t.describe;
+      typeLabel.textContent = t.type;
+      rarityLabel.textContent = t.rarity;
+      hintText.textContent = t.hint;
+      mediaNote.textContent = t.mediaNote;
+      resultsTitle.textContent = currentView === "world" ? t.worldTitle : t.possible;
+      worldTitle.textContent = t.worldTitle;
+      worldText.textContent = t.worldText;
+      freeText.placeholder = t.placeholder;
+      enBtn.classList.toggle("active", lang === "en");
+      heBtn.classList.toggle("active", lang === "he");
+      buildCountrySelect();
+      buildTypeSelect();
+      buildRaritySelect();
+      buildCountryButtons();
+    }
+
+    function buildCountrySelect(){
+      const old = countrySelect.value || "Israel";
+      countrySelect.innerHTML = "";
+      countryList.forEach(c => {
+        const option = document.createElement("option");
+        option.value = c;
+        option.textContent = tr().countries[c] || c;
+        countrySelect.appendChild(option);
+      });
+      countrySelect.value = old;
+    }
+
+    function buildTypeSelect(){
+      const old = typeSelect.value || "";
+      typeSelect.innerHTML = `<option value="">${tr().all}</option>`;
+      typeList.forEach(type => {
+        const option = document.createElement("option");
+        option.value = type;
+        option.textContent = tr().types[type] || type;
+        typeSelect.appendChild(option);
+      });
+      typeSelect.value = old;
+    }
+
+    function buildRaritySelect(){
+      const old = raritySelect.value || "";
+      raritySelect.innerHTML = `
+        <option value="">${tr().all}</option>
+        <option value="1">⭐ ${tr().common}</option>
+        <option value="2">⭐⭐</option>
+        <option value="3">⭐⭐⭐</option>
+        <option value="4">⭐⭐⭐⭐</option>
+        <option value="5">⭐⭐⭐⭐⭐ ${tr().rareBird}</option>
+      `;
+      raritySelect.value = old;
+    }
+
+    function buildCountryButtons(){
+      countryButtons.innerHTML = "";
+      countryList.forEach(c => {
+        const btn = document.createElement("button");
+        btn.textContent = tr().countries[c] || c;
+        btn.className = selectedCountry() === c ? "active" : "";
+        btn.onclick = () => { countrySelect.value = c; filterBirds(); };
+        countryButtons.appendChild(btn);
+      });
+    }
+
+    function toggleMenu(open){
+      menuDrawer.classList.toggle("open", open);
+      overlay.classList.toggle("open", open);
+    }
+
+    function setView(view){
+      currentView = view;
+      toggleMenu(false);
+      worldView.classList.toggle("hidden", view !== "world");
+      resultsTitle.textContent = view === "world" ? tr().worldTitle : tr().possible;
+      filterBirds();
+    }
+
+    function scoreBird(bird, terms){
+      const text = normalize([displayName(bird), bird.en, bird.he, bird.scientific, bird.type, tr().types[bird.type], bird.tags, bird.countries.join(" ")].join(" "));
+      let score = 0;
+      terms.forEach(term => { if (text.includes(term)) score++; });
+      return score;
+    }
+
+    function filterBirds(){
+      const country = selectedCountry();
+      const type = typeSelect.value;
+      const minRarity = raritySelect.value;
+      const terms = normalize(freeText.value).split(/\s+/).filter(Boolean);
+
+      let list = birds
+        .filter(b => b.countries.includes(country))
+        .map(b => ({ bird: b, rarityValue: getRarity(b, country), score: scoreBird(b, terms) }));
+
+      if (type) list = list.filter(x => x.bird.type === type);
+      if (minRarity) list = list.filter(x => x.rarityValue >= Number(minRarity));
+      if (terms.length) list = list.filter(x => x.score > 0);
+      if (currentView === "seen") list = list.filter(x => (seenCounts[x.bird.id] || 0) > 0);
+      if (currentView === "rare") list = list.filter(x => x.rarityValue >= 4);
+
+      list.sort((a,b) => {
+        const seen = (seenCounts[b.bird.id] || 0) - (seenCounts[a.bird.id] || 0);
+        if (seen) return seen;
+        if (terms.length && b.score !== a.score) return b.score - a.score;
+        return a.rarityValue - b.rarityValue;
+      });
+
+      renderBirds(list, country);
+      buildCountryButtons();
+    }
+
+    function renderBirds(list, country){
+      grid.innerHTML = "";
+      countEl.textContent = tr().count(list.length);
+      if (!list.length) {
+        grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:#64748b;font-size:20px;padding:38px 10px;">${tr().noResults}</div>`;
+        return;
+      }
+
+      list.forEach(({bird, rarityValue}) => {
+        const card = document.createElement("article");
+        card.className = "bird-card";
+        const countries = bird.countries.map(c => tr().countries[c] || c).join(", ");
+        card.innerHTML = `
+          <div class="image-wrap">
+            <img id="img-${bird.id}" src="${FALLBACK_IMAGE}" alt="${displayName(bird)}" loading="lazy">
+            <button class="sound-btn" id="sound-${bird.id}" title="Sound" onclick="playSound('${bird.id}')">🔊</button>
+          </div>
+          <div class="bird-card-content">
+            <div class="bird-title-row">
+              <div>
+                <div class="bird-name">${displayName(bird)}</div>
+                <div class="latin">${bird.scientific}</div>
+              </div>
+              <button class="plus-btn" title="${tr().plusTitle}" onclick="addSeen('${bird.id}')">+</button>
+            </div>
+            <div class="seen-count">${tr().seenCount(seenCounts[bird.id] || 0)}</div>
+            <div class="rarity">${tr().rarityWord}: ${rarityStars(rarityValue)} ${rarityValue >= 4 ? `· ${tr().rareBird}` : `· ${tr().common}`}</div>
+            <div class="tags"><span class="tag">${tr().types[bird.type] || bird.type}</span><span class="tag">${countries}</span></div>
+          </div>`;
+        grid.appendChild(card);
+        loadImageForBird(bird);
+      });
+    }
+
+    async function loadImageForBird(bird){
+      const img = document.getElementById(`img-${bird.id}`);
+      if (!img) return;
+      const key = `birdImageV3:${bird.id}`;
+      const cached = localStorage.getItem(key);
+      if (cached) { img.src = cached; return; }
+      try {
+        const res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(bird.en)}`);
+        if (!res.ok) throw new Error("No image");
+        const data = await res.json();
+        const image = data.thumbnail?.source || data.originalimage?.source;
+        if (image) {
+          localStorage.setItem(key, image);
+          img.src = image;
+        }
+      } catch (err) {
+        img.src = FALLBACK_IMAGE;
+      }
+    }
+
+    async function findSoundForBird(bird){
+      const key = `birdSoundV3:${bird.id}`;
+      const cached = localStorage.getItem(key);
+      if (cached) return cached;
+
+      const queries = [
+        `${bird.scientific} q:A`,
+        `${bird.scientific}`,
+        `${bird.en} q:A`,
+        `${bird.en}`
+      ];
+
+      for (const q of queries) {
+        try {
+          const res = await fetch(`https://xeno-canto.org/api/3/recordings?query=${encodeURIComponent(q)}`);
+          if (!res.ok) continue;
+          const data = await res.json();
+          const recordings = (data.recordings || []).filter(r => r.file || r['file-name']);
+          recordings.sort((a,b) => String(a.q || "Z").localeCompare(String(b.q || "Z")));
+          const rec = recordings[0];
+          if (!rec) continue;
+          let url = rec.file;
+          if (!url && rec.id) url = `https://xeno-canto.org/${rec.id}/download`;
+          if (!url) continue;
+          if (url.startsWith("//")) url = "https:" + url;
+          if (url.startsWith("/")) url = "https://xeno-canto.org" + url;
+          localStorage.setItem(key, url);
+          return url;
+        } catch (err) {}
+      }
+      return "";
+    }
+
+    async function playSound(id){
+      const bird = birds.find(b => b.id === id);
+      if (!bird) return;
+      const btn = document.getElementById(`sound-${id}`);
+      if (btn) { btn.textContent = "⏳"; btn.classList.add("loading"); }
+      const url = await findSoundForBird(bird);
+      if (btn) { btn.textContent = "🔊"; btn.classList.remove("loading"); }
+      if (!url) { alert(tr().soundMissing); return; }
+      if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; }
+      currentAudio = new Audio(url);
+      currentAudio.crossOrigin = "anonymous";
+      currentAudio.play().catch(() => {
+        localStorage.removeItem(`birdSoundV3:${bird.id}`);
+        alert(tr().soundMissing);
+      });
+    }
+
+    function addSeen(id){
+      seenCounts[id] = (seenCounts[id] || 0) + 1;
+      localStorage.setItem("birdSeenCountsV3", JSON.stringify(seenCounts));
+      filterBirds();
+    }
+
+    function resetSeen(){
+      if (!confirm(tr().confirmReset)) return;
+      seenCounts = {};
+      localStorage.setItem("birdSeenCountsV3", JSON.stringify(seenCounts));
+      filterBirds();
+      toggleMenu(false);
+    }
+
+    document.addEventListener("keydown", e => { if (e.key === "Escape") toggleMenu(false); });
+
+    setLanguage(lang);
+    countrySelect.value = "Israel";
+    filterBirds();
   </script>
 </body>
 </html>
